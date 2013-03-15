@@ -1,4 +1,8 @@
 if (Meteor.isClient) {
+
+    Session.set('new-chat','');
+    Session.set('new-chat-focus',false);
+
     Template.hello.greeting = function () {
         return "Welcome to gay-or-straight.";
     };
@@ -46,8 +50,6 @@ if (Meteor.isClient) {
     });
 
     Meteor.startup(function () {
-        Session.set('new-chat-focus',false);
-        Session.set('new-chat','');
     });
 }
 
