@@ -6,32 +6,44 @@
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
+    margin: 0;
+    padding: 0;
+}
+
+.rounded-corners (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
 }
 
 h1 {
     color: @textColor;
-    margin-top: 0;
 }
 
 #contents {
+    padding: 0 0.5em 0.25em 0.5em;
     width: 100%;
+    background-color: white;
 }
 
 #main {
-    margin: 0;
-    width: 60%;
+    width: 69%;
     background-color: orange;
 }
 
 #chat {
-    margin: 0;
     float: right;
-    width: 40%;
+    width: 30%;
     background-color: yellow;
-    padding-left: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    .rounded-corners;
 }
 
 #footer {
+    padding: 4px;
     clear: both;
     background-color: #dddddd;
 }
