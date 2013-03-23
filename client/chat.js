@@ -33,6 +33,10 @@ Template.chat.events({
     'keyup #new-chat': function () {
         Session.set('new-chat',document.getElementById('new-chat').value.replace(/^\s+|\s+$/g, ''));
     },
+	'click #new-chat-submit': function(e) {
+		e.stopPropagation();
+        alert('clicked');
+    },
     'submit #chat-form': function (e, tmpl) {
         // Don't postback
         e.preventDefault();
