@@ -1,55 +1,75 @@
+/*jslint white:false plusplus:false browser:true nomen:false */
+/*globals Session, Template, alert */
+
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
 
+Template.chat.submit_chat = function(tmpl)
+{
+    alert('submit chat');
+};
+
+Template.chat.created = function() {
+    this.submit_mousedown_clicked = false; // kludge to get new-chat blur to stop losing focus
+};
+
 Template.chat.button_state = function () {
-    return ( Session.get('new-chat').length == 0 ) ? 'disabled="disabled"' : '';
-}
+    return ( Session.get('new-chat').length === 0 ) ? 'disabled="disabled"' : '';
+};
 Template.chat.button_visibility = function () {
-    return ( !Session.get('new-chat-focus') && (Session.get('new-chat').length == 0) ) ? 'class="hidden"' : '';
-}
+    return ( !Session.get('new-chat-focus') && (Session.get('new-chat').length === 0) ) ? 'class="hidden"' : '';
+};
 Template.chat.newchat = function () {
     return Session.get('new-chat');
-}
+};
 Template.chat.rowcount = function () {
     var ret = 4;
     if ( !Session.get('new-chat-focus') )
     {
-        if ( Session.get('new-chat').length == 0 )
+        if ( Session.get('new-chat').length === 0 )
+        {
             ret = 1;
+        }
     }
     return ret;
-}
+};
 
 Template.chat.events({
-    'focus #new-chat': function () {
+    'focus #new-chat': function (e,tmpl) {
         Session.set('new-chat-focus',true);
-        document.getElementById('new-chat').value = Session.get('new-chat');
+        tmpl.find('#new-chat').value = Session.get('new-chat');
     },
-    'blur #new-chat': function () {
-        Session.set('new-chat',document.getElementById('new-chat').value.replace(/^\s+|\s+$/g, ''));
-        document.getElementById('new-chat').value = Session.get('new-chat');
+    'blur #new-chat': function (e,tmpl) {
+        alert('got');
+        Session.set('new-chat',tmpl.find('#new-chat').value.replace(/^\s+|\s+$/g, ''));
+        tmpl.find('#new-chat').value = Session.get('new-chat');
         Session.set('new-chat-focus',false);
+        alert('got');
+        if ( tmpl.submit_mousedown_clicked )
+        {
+            // if there's something to submit, then submit it
+            if ( Session.get('new-chat').length !== 0 )
+            {
+                alert('wtf');
+                Template.chat.submit_chat(tmpl);
+            }
+            else
+            {
+                alert('nah');
+            }
+        }
     },
-    'keyup #new-chat': function () {
-        Session.set('new-chat',document.getElementById('new-chat').value.replace(/^\s+|\s+$/g, ''));
+    'keyup #new-chat': function (e,tmpl) {
+        Session.set('new-chat',tmpl.find('#new-chat').value.replace(/^\s+|\s+$/g, ''));
     },
-	'click #new-chat-submit': function(e) {
-		e.stopPropagation();
-        alert('clicked');
+    'mousedown #new-chat-submit': function(e, tmpl) { // hack to prevent blur from preventing submit
+        //e.stopPropagation();
+        tmpl.submit_mousedown_clicked = true;
     },
     'submit #chat-form': function (e, tmpl) {
+        tmpl.submit_mousedown_clicked = false; // reset in case it was set
         // Don't postback
         e.preventDefault();
- 		alert("no submit for you")
-        return;
-
-        // create the new movie
-        var newMovie = {
-            title: tmpl.find("#title").value,
-            director: tmpl.find("#director").value
-        };
- 
-        // add the movie to the db
-        Movies.insert(newMovie);
+        Template.chat.submit_chat(tmpl);
     }
 });

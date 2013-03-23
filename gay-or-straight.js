@@ -1,3 +1,6 @@
+/*jslint white:false plusplus:false browser:true nomen:false */
+/*globals Meteor */
+
 if (Meteor.isClient) {
     Meteor.startup(function () {
     });
