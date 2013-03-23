@@ -1,12 +1,12 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Session, Template, alert */
+/*globals Session, Template, Meteor, Chats, alert */
 
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
 
 Template.chat.submit_chat = function(tmpl)
 {
-	var newChat = { text: Session.get('new-chat'); }
+	var newChat = { text: Session.get('new-chat') };
     Session.set('new-chat','');
 
 	Meteor.call(
@@ -77,3 +77,7 @@ Template.chat.events({
         Template.chat.submit_chat(tmpl);
     }
 });
+
+Template.chat.chats = function () {
+    return Chats.find({}, {sort: {when:-1} } );
+};

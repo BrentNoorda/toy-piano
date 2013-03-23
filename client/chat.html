@@ -3,4 +3,11 @@
     <textarea type="text" tabindex="1" id="new-chat" rows="{{rowcount}}" placeholder="chatter...">{{newchat}}</textarea>
     <button type="submit" tabindex="2" id="new-chat-submit" {{{button_state}}} {{{button_visibility}}}>submit</button>
   </form>
+  <ul>
+    {{#each chats}}
+    <li>
+        {{text}}
+    </li>
+    {{/each}}
+    </ul>
 </template>
