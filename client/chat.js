@@ -32,5 +32,20 @@ Template.chat.events({
     },
     'keyup #new-chat': function () {
         Session.set('new-chat',document.getElementById('new-chat').value.replace(/^\s+|\s+$/g, ''));
+    },
+    'submit #chat-form': function (e, tmpl) {
+        // Don't postback
+        e.preventDefault();
+ 		alert("no submit for you")
+        return;
+
+        // create the new movie
+        var newMovie = {
+            title: tmpl.find("#title").value,
+            director: tmpl.find("#director").value
+        };
+ 
+        // add the movie to the db
+        Movies.insert(newMovie);
     }
 });
