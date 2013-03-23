@@ -1,6 +1,6 @@
 <template name="chat">
-  {{greeting}}
-  <br/>
-  <textarea type="text" tabindex="1" id="new-chat" rows="{{rowcount}}" placeholder="chatty...">{{newchat}}</textarea>
-  <button id="new-chat-submit" {{buttonstate}}>submit</button>
+  <form>
+    <textarea type="text" tabindex="1" id="new-chat" rows="{{rowcount}}" placeholder="chatter...">{{newchat}}</textarea>
+    <button type="submit" id="new-chat-submit" {{{button_state}}} {{{button_visibility}}}>submit</button>
+  </form>
 </template>

@@ -1,11 +1,11 @@
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
 
-Template.chat.greeting = function () {
-    return "hello from chat";
-}
-Template.chat.buttonstate = function () {
+Template.chat.button_state = function () {
     return ( Session.get('new-chat').length == 0 ) ? 'disabled="disabled"' : '';
+}
+Template.chat.button_visibility = function () {
+    return ( !Session.get('new-chat-focus') && (Session.get('new-chat').length == 0) ) ? 'class="hidden"' : '';
 }
 Template.chat.newchat = function () {
     return Session.get('new-chat');
