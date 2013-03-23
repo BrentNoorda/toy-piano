@@ -6,7 +6,18 @@ Session.set('new-chat-focus',false);
 
 Template.chat.submit_chat = function(tmpl)
 {
-    alert('submit chat');
+	var newChat = { text: Session.get('new-chat'); }
+    Session.set('new-chat','');
+
+	Meteor.call(
+	            "addChat",
+	            newChat,
+	            function (err, result) {
+	                if (err) {
+	                    alert("Could not add chat " + err.reason);
+	                }
+	            }
+	       );
 };
 
 Template.chat.created = function() {
@@ -40,22 +51,15 @@ Template.chat.events({
         tmpl.find('#new-chat').value = Session.get('new-chat');
     },
     'blur #new-chat': function (e,tmpl) {
-        alert('got');
         Session.set('new-chat',tmpl.find('#new-chat').value.replace(/^\s+|\s+$/g, ''));
         tmpl.find('#new-chat').value = Session.get('new-chat');
         Session.set('new-chat-focus',false);
-        alert('got');
         if ( tmpl.submit_mousedown_clicked )
         {
             // if there's something to submit, then submit it
             if ( Session.get('new-chat').length !== 0 )
             {
-                alert('wtf');
                 Template.chat.submit_chat(tmpl);
-            }
-            else
-            {
-                alert('nah');
             }
         }
     },
