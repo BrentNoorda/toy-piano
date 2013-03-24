@@ -13,6 +13,19 @@ Meteor.methods({
 
         newChat.when = new Date();
 
+        if (Meteor.isServer) {
+            // only keep a limited number of chats, and delete anything older
+            // code borrowed from http://stackoverflow.com/questions/6383638/mongodb-delete-old-chat
+            var oldestChats = Chats.find({},{
+                skip: 10,
+                sort: {when:-1}
+            });
+            oldestChats.forEach(function (chat) {
+                Chats.remove(chat._id);
+            });
+            //Chats.remove({when : {$lt : oldest.time }});
+        }
+
         // Insert movie (simulate on client, do it on server)
         return Chats.insert(newChat);
     }
