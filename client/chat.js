@@ -55,6 +55,7 @@ Template.chat.rowcount = function () {
 
 Template.chat.events({
     'focus #new-chat': function (e,tmpl) {
+        tmpl.submit_mousedown_clicked = false;
         Session.set('new-chat-focus',true);
         tmpl.find('#new-chat').value = Session.get('new-chat');
     },
