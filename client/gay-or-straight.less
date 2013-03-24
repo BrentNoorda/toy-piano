@@ -1,6 +1,4 @@
-/* LESS/CSS declarations go here */
-
-@textColor: #555555;
+@import "common.less";
 
 * {
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -8,14 +6,6 @@
     box-sizing: border-box;         /* Opera/IE 8+ */
     margin: 0;
     padding: 0;
-}
-
-.rounded-corners (@radius: 5px) {
-  -webkit-border-radius: @radius;
-  -moz-border-radius: @radius;
-  -ms-border-radius: @radius;
-  -o-border-radius: @radius;
-  border-radius: @radius;
 }
 
 h1 {
@@ -28,41 +18,12 @@ h1 {
     background-color: white;
 }
 
-#main {
-    width: 69%;
-    background-color: orange;
-}
-
-#chat {
-    float: right;
-    width: 30%;
-    background-color: #dca;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    .rounded-corners;
-}
-
 #footer {
     padding: 4px;
     clear: both;
     background-color: #dddddd;
 }
 
-#new-chat {
-    margin-top: 4px;
-    width: 100%;
-}
-
-#new-chat-submit {
-    float: right;
-}
-
 .hidden {
     display: none;
-}
-
-.old-chat {
-    background-color: #eee;
-    .rounded-corners(2px);
-    margin-top: 3px;
 }
