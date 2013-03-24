@@ -12,11 +12,6 @@ Template.chat.fade_in = function(_id) {
     return '';
 };
 
-Template.chat.rightnow = function() {
-    var d = new Date();
-    return d + ' ' + d.getMilliseconds();
-};
-
 Template.chat.submit_chat = function(tmpl)
 {
 	var newChat = { text: Session.get('new-chat') };
