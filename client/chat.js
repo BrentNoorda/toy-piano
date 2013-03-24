@@ -1,8 +1,16 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Session, Template, Meteor, Chats, alert */
+/*globals Session, Template, Meteor, Chats, $, alert */
 
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
+
+Template.chat.fade_in = function(_id) {
+    Meteor.setTimeout(function() {
+        /*$('#chat-'+_id).show('fast');*/
+        $('#chat-'+_id).removeClass('old-old-chat').addClass('new-old-chat');
+    },750);
+    return '';
+};
 
 Template.chat.rightnow = function() {
     var d = new Date();
