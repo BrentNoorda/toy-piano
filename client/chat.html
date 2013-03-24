@@ -1,11 +1,15 @@
 <template name="chat">
+  {{#isolate}}
   <form id="chat-form">
     <textarea type="text" tabindex="1" id="new-chat" rows="{{rowcount}}" placeholder="chatter...">{{newchat}}</textarea>
     <button type="submit" tabindex="2" id="new-chat-submit" {{{button_state}}} {{{button_visibility}}}>submit</button>
   </form>
+  {{/isolate}}
+  <div id="chats">
     {{#each chats}}
       <div class="old-chat">
-      	{{text}}
+        {{text}} [{{rightnow}}]
       </div>
     {{/each}}
+  </div>
 </template>

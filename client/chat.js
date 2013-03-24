@@ -4,6 +4,11 @@
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
 
+Template.chat.rightnow = function() {
+    var d = new Date();
+    return d + ' ' + d.getMilliseconds();
+};
+
 Template.chat.submit_chat = function(tmpl)
 {
 	var newChat = { text: Session.get('new-chat') };
