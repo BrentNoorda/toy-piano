@@ -10,6 +10,9 @@ Meteor.methods({
         if (newChat.text.length === 0) {
             throw new Meteor.Error(413, "Missing text!");
         }
+        if (newChat.username.length === 0) {
+            throw new Meteor.Error(413, "Missing username!");
+        }
 
         newChat.when = new Date();
 

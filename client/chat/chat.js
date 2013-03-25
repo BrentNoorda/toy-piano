@@ -14,7 +14,7 @@ Template.chat.fade_in = function(_id) {
 
 Template.chat.submit_chat = function(tmpl)
 {
-	var newChat = { text: Session.get('new-chat') };
+	var newChat = { text: Session.get('new-chat'), username: Session.get('username') };
     Session.set('new-chat','');
 
 	Meteor.call(
