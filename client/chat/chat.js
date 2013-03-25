@@ -8,7 +8,7 @@ Template.chat.fade_in = function(_id) {
     Meteor.setTimeout(function() {
         /*$('#chat-'+_id).show('fast');*/
         $('#chat-'+_id).removeClass('old-old-chat').addClass('new-old-chat');
-    },750);
+    },1050);
     return '';
 };
 
