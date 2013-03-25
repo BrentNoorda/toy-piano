@@ -8,3 +8,10 @@
   border-radius: @radius;
 }
 
+.property-transition (@property,@duration,@timingfunc,@delay) {
+  -webkit-transition: @property @duration @timingfunc @delay;
+     -moz-transition: @property @duration @timingfunc @delay;
+      -ms-transition: @property @duration @timingfunc @delay;
+       -o-transition: @property @duration @timingfunc @delay;
+          transition: @property @duration @timingfunc @delay;
+}
