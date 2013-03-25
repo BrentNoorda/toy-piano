@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Session, Template, Meteor, Chats, $, alert*/
+/*globals Session, Template, Meteor, Chats, $, alert, tidy_spaces*/
 
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
@@ -60,7 +60,7 @@ Template.chat.events({
         tmpl.find('#new-chat').value = Session.get('new-chat');
     },
     'blur #new-chat': function (e,tmpl) {
-        Session.set('new-chat',tmpl.find('#new-chat').value.replace(/^\s+|\s+$/g, ''));
+        Session.set('new-chat',tidy_spaces(tmpl.find('#new-chat').value));
         tmpl.find('#new-chat').value = Session.get('new-chat');
         Session.set('new-chat-focus',false);
         if ( tmpl.submit_mousedown_clicked )
@@ -73,7 +73,7 @@ Template.chat.events({
         }
     },
     'keyup #new-chat': function (e,tmpl) {
-        Session.set('new-chat',tmpl.find('#new-chat').value.replace(/^\s+|\s+$/g, ''));
+        Session.set('new-chat',tidy_spaces(tmpl.find('#new-chat').value));
     },
     'mousedown #new-chat-submit': function(e, tmpl) { // hack to prevent blur from preventing submit
         //e.stopPropagation();

@@ -5,7 +5,7 @@
 
 function set_username(username)
 {
-    username = username.replace(/^\s+|\s+$/g, '');
+    username = tidy_spaces(username);
     if ( username.length === 0 )
     {
         username = amplify.store('username');
