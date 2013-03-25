@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Session, Template, Meteor, Chats, $, alert */
+/*globals Session, Template, Meteor, Chats, $, alert*/
 
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);

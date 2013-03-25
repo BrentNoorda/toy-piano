@@ -1,6 +1,6 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Session, Template */
+/*globals Template, Session*/
 
 Template.body.username = function () {
-    return Session.get('new-chat');
+    return Session.get('username');
 };

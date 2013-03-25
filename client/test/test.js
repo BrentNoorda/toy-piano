@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Template, console */
+/*globals Template, console*/
 
 Template.test.greeting = function () {
     return "Welcome to gay-or-straight.";
