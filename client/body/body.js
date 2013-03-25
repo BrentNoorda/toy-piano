@@ -2,5 +2,5 @@
 /*globals Session, Template */
 
 Template.body.username = function () {
-    return 'dog';//Session.get('new-chat');
+    return Session.get('new-chat');
 };
