@@ -113,7 +113,10 @@ Template.chat.events({
         tmpl.submit_mousedown_clicked = false; // reset in case it was set
         // Don't postback
         e.preventDefault();
-        Template.chat.submit_chat(tmpl);
+        if ( Session.get('new-chat').length !== 0 )
+        {
+            Template.chat.submit_chat(tmpl);
+        }
     }
 });
 
