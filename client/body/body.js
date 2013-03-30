@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Template, Session, $, alert, Meteor, set_username*/
+/*globals Template, Session, $, Meteor, set_username*/
 
 Session.set('entering-username',false);
 

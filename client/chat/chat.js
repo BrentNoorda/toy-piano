@@ -1,6 +1,9 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
 /*globals Session, Template, Meteor, Chats, $, alert, tidy_spaces*/
 
+Template.chat.chatter_row_count = 4;
+Template.chat.chatter_full_height = null;   // will be calculated first time this is run
+
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
 
@@ -41,8 +44,35 @@ Template.chat.button_visibility = function () {
 Template.chat.newchat = function () {
     return Session.get('new-chat');
 };
-Template.chat.rowcount = function () {
-    var ret = 4;
+Template.chat.new_chat_class = function () {
+    if ( Template.chat.chatter_full_height === null )
+    {
+        // have not figure out full height yet, so do nothing special
+        return '';
+    }
+    var full_size = true;
+    if ( !Session.get('new-chat-focus') )
+    {
+        if ( Session.get('new-chat').length === 0 )
+        {
+            full_size = false;
+        }
+    }
+    if ( full_size )
+    {
+        Meteor.setTimeout(function(){$('#new-chat').height( Template.chat.chatter_full_height );},0);
+
+        return '';
+    }
+    else
+    {
+        Meteor.setTimeout(function(){$('#new-chat').height( Template.chat.chatter_full_height / Template.chat.chatter_row_count );},0);
+        //$('#new-chat').height( Template.chat.chatter_full_height / Template.chat.chatter_row_count );
+        return 'edit-chat-shrinker';
+    }
+};
+Template.chat.xxrowcount = function () {
+    var ret = this.gChatEditRowCount;
     if ( !Session.get('new-chat-focus') )
     {
         if ( Session.get('new-chat').length === 0 )
@@ -90,3 +120,8 @@ Template.chat.events({
 Template.chat.chats = function () {
     return Chats.find({}, {sort: {when:-1} } );
 };
+
+Meteor.startup(function () {
+    Template.chat.chatter_full_height = $('#new-chat').height();
+    $('#new-chat').height( Template.chat.chatter_full_height / Template.chat.chatter_row_count );
+});
