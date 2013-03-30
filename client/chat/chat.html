@@ -1,9 +1,9 @@
 <template name="chat">
   {{#isolate}}
-  <form id="chat-form">
-    <textarea type="text" class="{{{new_chat_class}}}" tabindex="1" id="new-chat" rows="{{chatter_row_count}}" placeholder="chatter...">{{newchat}}</textarea>
-    <button type="submit" tabindex="2" id="new-chat-submit" {{{button_state}}} {{{button_visibility}}}>submit</button>
-  </form>
+    <form id="chat-form">
+      <textarea type="text" class="{{{new_chat_class}}}" tabindex="1" id="new-chat" rows="{{chatter_row_count}}" placeholder="chatter...">{{newchat}}</textarea>
+      <button type="submit" tabindex="2" id="new-chat-submit" {{{button_state}}} {{{button_visibility}}}>submit</button>
+    </form>
   {{/isolate}}
   <div id="chats">
     {{#each chats}}

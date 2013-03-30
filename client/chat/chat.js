@@ -14,7 +14,7 @@ Template.chat.fade_in = function(_id) {
                 $(this).removeClass('old-old-chat').addClass('new-old-chat');
             }});
         });
-    },0);
+    },100);
     return '';
 };
 
