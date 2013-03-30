@@ -9,9 +9,12 @@ Session.set('new-chat-focus',false);
 
 Template.chat.fade_in = function(_id) {
     Meteor.setTimeout(function() {
-        /*$('#chat-'+_id).show('fast');*/
-        $('#chat-'+_id).removeClass('old-old-chat').addClass('new-old-chat');
-    },1050);
+        $('#chat-'+_id).show('fast',function(){
+            $(this).animate({opacity:1},{duration:'slow',complete:function(){
+                $(this).removeClass('old-old-chat').addClass('new-old-chat');
+            }});
+        });
+    },0);
     return '';
 };
 
@@ -70,17 +73,6 @@ Template.chat.new_chat_class = function () {
         //$('#new-chat').height( Template.chat.chatter_full_height / Template.chat.chatter_row_count );
         return 'edit-chat-shrinker';
     }
-};
-Template.chat.xxrowcount = function () {
-    var ret = this.gChatEditRowCount;
-    if ( !Session.get('new-chat-focus') )
-    {
-        if ( Session.get('new-chat').length === 0 )
-        {
-            ret = 1;
-        }
-    }
-    return ret;
 };
 
 Template.chat.events({
