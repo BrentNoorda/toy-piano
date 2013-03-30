@@ -1,5 +1,7 @@
 <template name="body">
-  <h1>Hello <a href="javascript:void 0" id="display-username" {{{display_username_visibility}}}>{{username}}</a><input value="{{username}}" id="enter-username" {{{enter_username_visibility}}}>, are you Gay or Straight?</h1>
+  {{#isolate}}
+    <h1>Hellox <a href="javascript:void 0" id="display-username" {{{display_username_visibility}}}>{{username}}</a><input value="{{username}}" id="enter-username" {{{enter_username_visibility}}}>, are you Gay or Straight?</h1>
+  {{/isolate}}
   <div id="chat">
     {{> chat}}
   </div>
