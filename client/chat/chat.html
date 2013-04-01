@@ -1,0 +1,17 @@
+<template name="chat">
+  {{#isolate}}
+    <form id="chat-form">
+      <textarea type="text" class="{{{new_chat_class}}}" tabindex="1" id="new-chat" rows="{{chatter_row_count}}" placeholder="chatter...">{{newchat}}</textarea>
+      <div id="new-chat-submit-div" {{{button_visibility}}}>
+        <button type="submit" tabindex="2" id="new-chat-submit" {{{button_state}}}>submit</button>
+      </div>
+    </form>
+  {{/isolate}}
+  <div id="chats">
+    {{#each chats}}
+      <div class="old-chat old-old-chat" id="chat-{{_id}}" {{fade_in _id}}>
+        <span class="chat-username">{{username}}:</span> {{text}}
+      </div>
+    {{/each}}
+  </div>
+</template>
