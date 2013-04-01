@@ -1,5 +1,7 @@
 @import "../common.less";
 
+@hide-chat-time: 450ms;  /* this must match transition time in chat.js */
+
 #chat {
     float: right;
     width: 30%;
@@ -18,6 +20,10 @@
     float: right;
     margin-bottom: 4px;
     padding: 0.2em 1em 0.3em 1em;
+}
+
+#new-chat-submit-div {
+    overflow:hidden;
 }
 
 #chats {
@@ -44,8 +50,9 @@
 
 .new-old-chat {
     background-color: #eee;
+    .property-transition(background-color,@hide-chat-time*2,linear,0);
 }
 
 .edit-chat-shrinker {
-    .property-transition(height,0.95s,linear,0);
+    .property-transition(height,@hide-chat-time,linear,0);
 }

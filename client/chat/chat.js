@@ -1,6 +1,8 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
 /*globals Session, Template, Meteor, Chats, $, alert, tidy_spaces*/
 
+var hide_chat_time = 450; /* this must match transition time in common.less */
+
 Template.chat.chatter_row_count = 4;
 Template.chat.chatter_full_height = null;   // will be calculated first time this is run
 
@@ -9,12 +11,12 @@ Session.set('new-chat-focus',false);
 
 Template.chat.fade_in = function(_id) {
     Meteor.setTimeout(function() {
-        $('#chat-'+_id).show('fast',function(){
+        $('#chat-'+_id).show(hide_chat_time,function(){
             $(this).animate({opacity:1},{duration:'slow',complete:function(){
                 $(this).removeClass('old-old-chat').addClass('new-old-chat');
             }});
         });
-    },100);
+    },0);
     return '';
 };
 
@@ -42,7 +44,18 @@ Template.chat.button_state = function () {
     return ( Session.get('new-chat').length === 0 ) ? 'disabled="disabled"' : '';
 };
 Template.chat.button_visibility = function () {
-    return ( !Session.get('new-chat-focus') && (Session.get('new-chat').length === 0) ) ? 'class="hidden"' : '';
+    //return ( !Session.get('new-chat-focus') && (Session.get('new-chat').length === 0) ) ? 'class="hidden"' : '';
+    if ( !Session.get('new-chat-focus') && Session.get('new-chat').length === 0 )
+    {
+        Meteor.setTimeout(function(){
+            $('#new-chat-submit-div').animate({height:0},{duration:hide_chat_time});
+        },0);
+        return '';
+    }
+    else
+    {
+        return '';
+    }
 };
 Template.chat.newchat = function () {
     return Session.get('new-chat');
@@ -64,7 +77,6 @@ Template.chat.new_chat_class = function () {
     if ( full_size )
     {
         Meteor.setTimeout(function(){$('#new-chat').height( Template.chat.chatter_full_height );},0);
-
         return '';
     }
     else
@@ -119,4 +131,5 @@ Template.chat.chats = function () {
 Meteor.startup(function () {
     Template.chat.chatter_full_height = $('#new-chat').height();
     $('#new-chat').height( Template.chat.chatter_full_height / Template.chat.chatter_row_count );
+    $('#new-chat-submit-div').height(0);
 });
