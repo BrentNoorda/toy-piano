@@ -1,6 +1,11 @@
 @import "../common.less";
 
-@hide-chat-time: 450ms;  /* this must match transition time in chat.js */
+@hide-chat-time: 450;  /* this is shared with chat.less via css-shared-globals */
+
+#css-shared-globals {
+    background-image: url("about:$$$({hideChatTime:@{hide-chat-time}})$$$");
+    display:none;
+}
 
 #chat {
     float: right;
@@ -50,9 +55,9 @@
 
 .new-old-chat {
     background-color: #eee;
-    .property-transition(background-color,@hide-chat-time*2,linear,0);
+    .property-transition(background-color,unit(@hide-chat-time*2,ms),linear,0);
 }
 
 .edit-chat-shrinker {
-    .property-transition(height,@hide-chat-time,linear,0);
+    .property-transition(height,unit(@hide-chat-time,ms),linear,0);
 }

@@ -1,7 +1,7 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
 /*globals Session, Template, Meteor, Chats, $, alert, tidy_spaces*/
 
-var hide_chat_time = 450; /* this must match transition time in common.less */
+var hide_chat_time; /* initialized from chat.less in the  Meteor.startup method */
 
 Template.chat.chatter_row_count = 4;
 Template.chat.chatter_full_height = null;   // will be calculated first time this is run
@@ -129,7 +129,18 @@ Template.chat.chats = function () {
 };
 
 Meteor.startup(function () {
+    var el, elObj;
     Template.chat.chatter_full_height = $('#new-chat').height();
     $('#new-chat').height( Template.chat.chatter_full_height / Template.chat.chatter_row_count );
     $('#new-chat-submit-div').height(0);
+
+    // load globals from chat.less
+    el = $('#css-shared-globals');
+    //alert(el.css('background-image'));
+    //alert("el thing = " + decodeURI(el.css('background-image').split('$$$')[1]));
+    /*jslint evil:true */
+    elObj = eval(decodeURI(el.css('background-image').split('$$$')[1]));
+    /*jslint evil:false */
+    //alert("elObj.hideChatTime  = " + elObj.hideChatTime);
+    hide_chat_time = elObj.hideChatTime;
 });
