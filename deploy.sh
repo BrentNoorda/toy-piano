@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# deploy new gay-or-straight to server
+# deploy new toy-piano to server
 
-meteor deploy gay-or-straight.meteor.com
-open http://gay-or-straight.meteor.com/
+meteor deploy toy-piano.meteor.com
+open http://toy-piano.meteor.com/

@@ -1,4 +1,4 @@
-gay-or-straight
+toy-piano
 ===============
 
 Playing around with MeteorJS.

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# run gay-or-straight locally
+# run toy-piano locally
 
 open http://localhost:3000/
 meteor

@@ -2,7 +2,7 @@
 /*globals Template, console*/
 
 Template.test.greeting = function () {
-    return "Welcome to gay-or-straight.";
+    return "Welcome to toy-piano";
 };
 
 Template.test.events({
