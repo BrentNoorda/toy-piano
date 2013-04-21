@@ -1,7 +1,7 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
 /*globals Meteor*/
 
-var Chats = new Meteor.Collection("chats");
+Chats = new Meteor.Collection("chats");
 
 // from http://stephenwalther.com/archive/2013/03/18/an-introduction-to-meteor.aspx
 Meteor.methods({
