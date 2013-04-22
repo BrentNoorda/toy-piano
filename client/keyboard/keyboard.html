@@ -1,7 +1,9 @@
 <template name="keyboard">
-  <div id="keyboard-case">
+  <div id="keyboard-case" {{{render_on_resize}}}>
     {{#each whiteKeys}}
-      {{name}}
+      <div class="white-key" style="left:{{leftOffset}}px;width:{{width}}px">
+        {{name}}
+      </div>
     {{/each}}
   </div>
 </template>

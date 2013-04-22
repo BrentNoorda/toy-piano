@@ -1,2 +1,21 @@
 @import "../common.less";
 
+@case-height: 300px;
+
+#keyboard-case {
+    width: 100%;
+    position: relative;
+    height: @case-height;
+}
+
+.white-key {
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1px;
+    height: @case-height;
+}
