@@ -2,7 +2,10 @@
   <div id="keyboard-case" {{{render_on_resize}}} style="height:{{keyboardHeight}}px;">
     {{#each whiteKeys}}
       <div class="white-key" style="left:{{leftOffset}}px;width:{{width}}px">
-        {{name}}
+      </div>
+    {{/each}}
+    {{#each blackKeys}}
+      <div class="black-key" style="left:{{leftOffset}}px;width:{{width}}px">
       </div>
     {{/each}}
   </div>
