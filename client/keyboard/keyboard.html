@@ -1,5 +1,5 @@
 <template name="keyboard">
-  <div id="keyboard-case" {{{render_on_resize}}}>
+  <div id="keyboard-case" {{{render_on_resize}}} style="height:{{keyboardHeight}}px;">
     {{#each whiteKeys}}
       <div class="white-key" style="left:{{leftOffset}}px;width:{{width}}px">
         {{name}}
