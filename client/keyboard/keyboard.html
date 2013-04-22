@@ -1,6 +1,8 @@
 <template name="keyboard">
-  <h1>Keyboard</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+  <div id="keyboard-case">
+    {{#each whiteKeys}}
+      {{name}}
+    {{/each}}
+  </div>
 </template>
 
