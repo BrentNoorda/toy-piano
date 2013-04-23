@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals $, Template, Session, Meteor, window, white_keypress:true, black_keypress:true*/
+/*globals $, Template, Session, Meteor, window, white_keypress:true, black_keypress:true, Audio*/
 
 var keyboardWidth = 50;  // changed whenever screen size changes
 Template.keyboard.keyboardHeight = 10;
@@ -13,15 +13,15 @@ Template.keyboard.whiteKeys = [
     { name: 'g', idx:4, leftOffset:5, width:1, timeout:null },
     { name: 'a', idx:5, leftOffset:6, width:1, timeout:null },
     { name: 'b', idx:6, leftOffset:7, width:1, timeout:null },
-    { name: 'c', idx:7, leftOffset:8, width:1, timeout:null }
+    { name: 'c2', idx:7, leftOffset:8, width:1, timeout:null }
 ];
 
 Template.keyboard.blackKeys = [
-    { name: 'c#', idx:0, leftOffset:1, width:1, timeout:null },
-    { name: 'd#', idx:1, leftOffset:2, width:1, timeout:null },
-    { name: 'f#', idx:2, leftOffset:2, width:1, timeout:null },
-    { name: 'g#', idx:3, leftOffset:2, width:1, timeout:null },
-    { name: 'a#', idx:4, leftOffset:2, width:1, timeout:null }
+    { name: 'cs', idx:0, leftOffset:1, width:1, timeout:null },
+    { name: 'ds', idx:1, leftOffset:2, width:1, timeout:null },
+    { name: 'fs', idx:2, leftOffset:2, width:1, timeout:null },
+    { name: 'gs', idx:3, leftOffset:2, width:1, timeout:null },
+    { name: 'as', idx:4, leftOffset:2, width:1, timeout:null }
 ];
 
 function change_keyboard_size()
@@ -93,6 +93,8 @@ function key_pressed(selector,key,newClass)
     Meteor.setTimeout(function(){
         $(selector).removeClass(newClass);
     },press_timeout);
+    var audio = new Audio(key.name + ".mp3");
+    audio.play();
 }
 
 white_keypress = function(idx) {
@@ -105,8 +107,21 @@ black_keypress = function(idx) {
 };
 
 Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
+    var i, key;
     $(window).resize(function(evt) {
         change_keyboard_size();
     });
     change_keyboard_size();
+
+    // prime the pump by getting all the key sounds loaded
+    for ( i = 0; i < Template.keyboard.whiteKeys.length; i++ )
+    {
+        key = Template.keyboard.whiteKeys[i];
+        key.audio = new Audio(key.name + ".mp3");
+    }
+    for ( i = 0; i < Template.keyboard.blackKeys.length; i++ )
+    {
+        key = Template.keyboard.blackKeys[i];
+        key.audio = new Audio(key.name + ".mp3");
+    }
 };
