@@ -25,7 +25,7 @@ Template.keyboard.keys = [
     { note: 'a#', audiofile: 'as' }
 ];
 
-function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .timeout, .color
+function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .timeout, .color, .audio
 {
     var i, key;
     white_key_count = 0;
@@ -36,6 +36,7 @@ function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, 
         key.leftOffset = 1;
         key.width = 1;
         key.timeout = null;
+        key.audio = new Audio(key.audiofile + ".mp3");
         if ( key.note.length === 1 )
         {
             white_key_count += 1;
@@ -135,16 +136,8 @@ key_pressed = function(idx) {
 };
 
 Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
-    var i, key;
     $(window).resize(function(evt) {
         change_keyboard_size();
     });
     change_keyboard_size();
-
-    // prime the pump by getting all the key sounds loaded
-    for ( i = 0; i < Template.keyboard.keys.length; i++ )
-    {
-        key = Template.keyboard.keys[i];
-        key.audio = new Audio(key.audiofile + ".mp3");
-    }
 };
