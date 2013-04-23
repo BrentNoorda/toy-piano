@@ -62,16 +62,6 @@ function change_keyboard_size()
     }
 }
 
-Template.keyboard.events({
-    'click input' : function () {
-        // template data, if any, is available in 'this'
-        if (typeof console !== 'undefined')
-        {
-            console.log("You pressed the button");
-        }
-    }
-});
-
 Template.keyboard.rendered = function() {
     change_keyboard_size();
 };
@@ -81,6 +71,11 @@ Template.keyboard.render_on_resize = function() {
     Session.get('keyboardHeight');
     return '';
 };
+
+keypress = function(keyName) {
+    alert("press" + keyName);
+    return false;
+}
 
 Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
     $(window).resize(function(evt) {

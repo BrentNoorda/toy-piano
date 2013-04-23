@@ -1,11 +1,13 @@
 <template name="keyboard">
   <div id="keyboard-case" {{{render_on_resize}}} style="height:{{keyboardHeight}}px;">
     {{#each whiteKeys}}
-      <div class="white-key" style="left:{{leftOffset}}px;width:{{width}}px">
+      <div class="white-key" style="left:{{leftOffset}}px;width:{{width}}px;"
+       ontouchstart="return keypress('{{name}}')" onmousedown="return keypress('{{name}}')">
       </div>
     {{/each}}
     {{#each blackKeys}}
-      <div class="black-key" style="left:{{leftOffset}}px;width:{{width}}px">
+      <div class="black-key" style="left:{{leftOffset}}px;width:{{width}}px;"
+       ontouchstart="return keypress('{{name}}')" onmousedown="return keypress('{{name}}')">
       </div>
     {{/each}}
   </div>
