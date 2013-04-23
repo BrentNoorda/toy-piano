@@ -1,63 +1,90 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals $, Template, Session, Meteor, window, white_keypress:true, black_keypress:true, Audio*/
+/*globals $, Template, Session, Meteor, window, key_pressed:true, Audio*/
 
 var keyboardWidth = 50;  // changed whenever screen size changes
+var white_key_count;
 Template.keyboard.keyboardHeight = 10;
 var press_timeout = 250;
 
-Template.keyboard.whiteKeys = [
-    { name: 'c', idx:0, leftOffset:1, width:1, timeout:null },
-    { name: 'd', idx:1, leftOffset:2, width:1, timeout:null },
-    { name: 'e', idx:2, leftOffset:3, width:1, timeout:null },
-    { name: 'f', idx:3, leftOffset:4, width:1, timeout:null },
-    { name: 'g', idx:4, leftOffset:5, width:1, timeout:null },
-    { name: 'a', idx:5, leftOffset:6, width:1, timeout:null },
-    { name: 'b', idx:6, leftOffset:7, width:1, timeout:null },
-    { name: 'c2', idx:7, leftOffset:8, width:1, timeout:null }
+Template.keyboard.keys = [
+    // list the white keys first (so display will put the black ones on top)
+    { note: 'c', audiofile: 'c' },
+    { note: 'd', audiofile: 'd' },
+    { note: 'e', audiofile: 'e' },
+    { note: 'f', audiofile: 'f' },
+    { note: 'g', audiofile: 'g' },
+    { note: 'a', audiofile: 'a' },
+    { note: 'b', audiofile: 'b' },
+    { note: 'c', audiofile: 'c2' },
+
+    // list the black keys second so they are on top
+    { note: 'c#', audiofile: 'cs' },
+    { note: 'd#', audiofile: 'ds' },
+    { note: 'f#', audiofile: 'fs' },
+    { note: 'g#', audiofile: 'gs' },
+    { note: 'a#', audiofile: 'as' }
 ];
 
-Template.keyboard.blackKeys = [
-    { name: 'cs', idx:0, leftOffset:1, width:1, timeout:null },
-    { name: 'ds', idx:1, leftOffset:2, width:1, timeout:null },
-    { name: 'fs', idx:2, leftOffset:2, width:1, timeout:null },
-    { name: 'gs', idx:3, leftOffset:2, width:1, timeout:null },
-    { name: 'as', idx:4, leftOffset:2, width:1, timeout:null }
-];
+function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .timeout, .color
+{
+    var i, key;
+    white_key_count = 0;
+    for ( i = 0; i < Template.keyboard.keys.length; i++ )
+    {
+        key = Template.keyboard.keys[i];
+        key.idx = i;
+        key.leftOffset = 1;
+        key.width = 1;
+        key.timeout = null;
+        if ( key.note.length === 1 )
+        {
+            white_key_count += 1;
+            key.color = 'white';
+        }
+        else
+        {
+            key.color = 'black';
+        }
+    }
+}
+initialize_keyboard_keys_defaults();
 
 function change_keyboard_size()
 {
-    var new_width, screen_height, new_height, white_key_width, black_key_width, i, j, keyName, wKey, bKey;
+    var new_width, screen_height, new_height, white_key_width, black_key_width, i, j, wKeyNote, key, wKey;
     new_width = $('#keyboard-case').width();
     if ( new_width !== keyboardWidth )
     {
         keyboardWidth = new_width;
-        white_key_width = Math.floor(new_width / Template.keyboard.whiteKeys.length);
+        white_key_width = Math.floor(new_width / white_key_count);
         black_key_width = Math.floor(white_key_width * 2 / 3);
-        for ( i = 0; i < Template.keyboard.whiteKeys.length; i++ )
+        for ( i = 0; i < Template.keyboard.keys.length; i++ )
         {
-            wKey = Template.keyboard.whiteKeys[i];
-            wKey.width = white_key_width;
-            wKey.leftOffset = (white_key_width) * i;
-            Meteor.clearTimeout(wKey.timeout);
-            wKey.timeout = null;
-        }
-        for ( j = 0; j < Template.keyboard.blackKeys.length; j++ )
-        {
-            bKey = Template.keyboard.blackKeys[j];
-            keyName = bKey.name.substring(0,1);
-            for ( i = 0; i < Template.keyboard.whiteKeys.length; i++ )
+            key = Template.keyboard.keys[i];
+            Meteor.clearTimeout(key.timeout);
+            key.timeout = null;
+            if ( key.color === "white" )
             {
-                wKey = Template.keyboard.whiteKeys[i];
-                if ( wKey.name === keyName ) {
-                    bKey.width = black_key_width;
-                    bKey.leftOffset = Math.floor(
-                        Template.keyboard.whiteKeys[i+1].leftOffset - (black_key_width/2)
-                    );
-                    break;
+                // white key
+                key.width = white_key_width;
+                key.leftOffset = (white_key_width) * i;
+            }
+            else
+            {
+                // black key
+                key.width = black_key_width;
+                wKeyNote = key.note.substring(0,1);
+                for ( j = 0; j < Template.keyboard.keys.length; j++ )
+                {
+                    wKey = Template.keyboard.keys[j];
+                    if ( wKey.note === wKeyNote ) {
+                        key.leftOffset = Math.floor(
+                            Template.keyboard.keys[j+1].leftOffset - (black_key_width/2)
+                        );
+                        break;
+                    }
                 }
             }
-            Meteor.clearTimeout(bKey.timeout);
-            bKey.timeout = null;
         }
         Session.set('keyboardWidth',new_width);
     }
@@ -80,8 +107,12 @@ Template.keyboard.render_on_resize = function() {
     return '';
 };
 
-function key_pressed(selector,key,newClass)
-{
+key_pressed = function(idx) {
+    var selector, key, newClass;
+    selector = '#key-' + idx;
+    key = Template.keyboard.keys[idx];
+    newClass = key.color + "-key-pressed";
+
     try {
         key.audio.pause();
     } catch(e1) { } // can be a problem on iphone
@@ -100,14 +131,6 @@ function key_pressed(selector,key,newClass)
     Meteor.setTimeout(function(){
         $(selector).removeClass(newClass);
     },press_timeout);
-}
-
-white_keypress = function(idx) {
-    key_pressed("#whitekey-" + idx,Template.keyboard.whiteKeys[idx],"white-key-pressed");
-    return false;
-};
-black_keypress = function(idx) {
-    key_pressed("#blackkey-" + idx,Template.keyboard.blackKeys[idx],"black-key-pressed");
     return false;
 };
 
@@ -119,14 +142,9 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
     change_keyboard_size();
 
     // prime the pump by getting all the key sounds loaded
-    for ( i = 0; i < Template.keyboard.whiteKeys.length; i++ )
+    for ( i = 0; i < Template.keyboard.keys.length; i++ )
     {
-        key = Template.keyboard.whiteKeys[i];
-        key.audio = new Audio(key.name + ".mp3");
-    }
-    for ( i = 0; i < Template.keyboard.blackKeys.length; i++ )
-    {
-        key = Template.keyboard.blackKeys[i];
-        key.audio = new Audio(key.name + ".mp3");
+        key = Template.keyboard.keys[i];
+        key.audio = new Audio(key.audiofile + ".mp3");
     }
 };
