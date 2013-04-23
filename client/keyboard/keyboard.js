@@ -3,7 +3,7 @@
 
 var keyboardWidth = 50;  // changed whenever screen size changes
 Template.keyboard.keyboardHeight = 10;
-var press_timeout = 100;
+var press_timeout = 250;
 
 Template.keyboard.whiteKeys = [
     { name: 'c', idx:0, leftOffset:1, width:1, timeout:null },
@@ -82,6 +82,13 @@ Template.keyboard.render_on_resize = function() {
 
 function key_pressed(selector,key,newClass)
 {
+    try {
+        key.audio.pause();
+    } catch(e1) { } // can be a problem on iphone
+    try {
+        key.audio.currentTime=0;
+    } catch(e2) { } // can be a problem on iphone
+    key.audio.play();
     if ( key.timeout !== null )
     {
         Meteor.clearTimeout(key.timeout);
@@ -93,8 +100,6 @@ function key_pressed(selector,key,newClass)
     Meteor.setTimeout(function(){
         $(selector).removeClass(newClass);
     },press_timeout);
-    var audio = new Audio(key.name + ".mp3");
-    audio.play();
 }
 
 white_keypress = function(idx) {
