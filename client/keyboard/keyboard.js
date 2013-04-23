@@ -8,24 +8,24 @@ var press_timeout = 250;
 
 Template.keyboard.keys = [
     // list the white keys first (so display will put the black ones on top)
-    { note: 'c', audiofile: 'c' },
-    { note: 'd', audiofile: 'd' },
-    { note: 'e', audiofile: 'e' },
-    { note: 'f', audiofile: 'f' },
-    { note: 'g', audiofile: 'g' },
-    { note: 'a', audiofile: 'a' },
-    { note: 'b', audiofile: 'b' },
-    { note: 'c', audiofile: 'c2' },
+    { note: 'c', audiofile: 'c',  keyboardKey: 'S' },
+    { note: 'd', audiofile: 'd',  keyboardKey: 'D' },
+    { note: 'e', audiofile: 'e',  keyboardKey: 'F' },
+    { note: 'f', audiofile: 'f',  keyboardKey: 'G' },
+    { note: 'g', audiofile: 'g',  keyboardKey: 'H' },
+    { note: 'a', audiofile: 'a',  keyboardKey: 'J' },
+    { note: 'b', audiofile: 'b',  keyboardKey: 'K' },
+    { note: 'c', audiofile: 'c2', keyboardKey: 'L' },
 
     // list the black keys second so they are on top
-    { note: 'c#', audiofile: 'cs' },
-    { note: 'd#', audiofile: 'ds' },
-    { note: 'f#', audiofile: 'fs' },
-    { note: 'g#', audiofile: 'gs' },
-    { note: 'a#', audiofile: 'as' }
+    { note: 'c#', audiofile: 'cs', keyboardKey: 'E' },
+    { note: 'd#', audiofile: 'ds', keyboardKey: 'R' },
+    { note: 'f#', audiofile: 'fs', keyboardKey: 'Y' },
+    { note: 'g#', audiofile: 'gs', keyboardKey: 'U' },
+    { note: 'a#', audiofile: 'as', keyboardKey: 'I' }
 ];
 
-function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .timeout, .color, .audio
+function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .timeout, .color, .audio, .keyboardCode
 {
     var i, key;
     white_key_count = 0;
@@ -37,6 +37,7 @@ function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, 
         key.width = 1;
         key.timeout = null;
         key.audio = new Audio(key.audiofile + ".mp3");
+        key.keyboardCode = key.keyboardKey.toLowerCase().charCodeAt(0);
         if ( key.note.length === 1 )
         {
             white_key_count += 1;
@@ -100,6 +101,19 @@ function change_keyboard_size()
 
 Template.keyboard.rendered = function() {
     change_keyboard_size();
+
+    $(document).keypress(function(e) {
+        var idx, key;
+        for ( idx = 0; idx < Template.keyboard.keys.length; idx++ )
+        {
+            key = Template.keyboard.keys[idx];
+            if ( key.keyboardCode === e.which )
+            {
+                key_pressed(idx);
+                break;
+            }
+        }
+    });
 };
 
 Template.keyboard.render_on_resize = function() {

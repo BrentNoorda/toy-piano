@@ -3,6 +3,7 @@
     {{#each keys}}
       <div class="{{color}}-key" id="key-{{idx}}" style="left:{{leftOffset}}px;width:{{width}}px;"
        ontouchstart="return key_pressed('{{idx}}')" onmousedown="return key_pressed('{{idx}}')">
+         {{keyboardKey}}
       </div>
     {{/each}}
   </div>
