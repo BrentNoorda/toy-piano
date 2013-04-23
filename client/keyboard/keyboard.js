@@ -103,14 +103,17 @@ Template.keyboard.rendered = function() {
     change_keyboard_size();
 
     $(document).keypress(function(e) {
-        var idx, key;
-        for ( idx = 0; idx < Template.keyboard.keys.length; idx++ )
+        if ( !Session.get('new-chat-focus') )
         {
-            key = Template.keyboard.keys[idx];
-            if ( key.keyboardCode === e.which )
+            var idx, key;
+            for ( idx = 0; idx < Template.keyboard.keys.length; idx++ )
             {
-                key_pressed(idx);
-                break;
+                key = Template.keyboard.keys[idx];
+                if ( key.keyboardCode === e.which )
+                {
+                    key_pressed(idx);
+                    break;
+                }
             }
         }
     });
