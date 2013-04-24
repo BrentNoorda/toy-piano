@@ -115,6 +115,15 @@ key_pressed = function(idx,fromServer) {
     key = Template.keyboard.keys[idx];
     newClass = key.color + "-key-pressed";
 
+    if ( Session.get('entering-username') )
+    {
+        $('#enter-username').blur();
+    }
+    if ( Session.get('new-chat-focus') )
+    {
+        $('#new-chat').blur();
+    }
+
     try {
         key.audio.pause();
     } catch(e1) { } // can be a problem on iphone
@@ -175,7 +184,7 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
     change_keyboard_size();
 
     $(document).keydown(function(e) {
-        if ( !Session.get('new-chat-focus') )
+        if ( !Session.get('new-chat-focus')  && !Session.get('entering-username') )
         {
             var idx, key;
             for ( idx = 0; idx < Template.keyboard.keys.length; idx++ )
