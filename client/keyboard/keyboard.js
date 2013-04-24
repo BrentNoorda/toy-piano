@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals $, Template, Session, Meteor, window, key_pressed:true, Audio*/
+/*globals $, Template, Session, Meteor, Keypokes, window, key_pressed:true, Audio, alert*/
 
 var keyboardWidth = 50;  // changed whenever screen size changes
 var white_key_count;
@@ -37,7 +37,7 @@ function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, 
         key.width = 1;
         key.timeout = null;
         key.audio = new Audio(key.audiofile + ".mp3");
-        key.keyboardCode = key.keyboardKey.toLowerCase().charCodeAt(0);
+        key.keyboardCode = key.keyboardKey.charCodeAt(0);
         if ( key.note.length === 1 )
         {
             white_key_count += 1;
@@ -101,22 +101,6 @@ function change_keyboard_size()
 
 Template.keyboard.rendered = function() {
     change_keyboard_size();
-
-    $(document).keypress(function(e) {
-        if ( !Session.get('new-chat-focus') )
-        {
-            var idx, key;
-            for ( idx = 0; idx < Template.keyboard.keys.length; idx++ )
-            {
-                key = Template.keyboard.keys[idx];
-                if ( key.keyboardCode === e.which )
-                {
-                    key_pressed(idx);
-                    break;
-                }
-            }
-        }
-    });
 };
 
 Template.keyboard.render_on_resize = function() {
@@ -125,8 +109,8 @@ Template.keyboard.render_on_resize = function() {
     return '';
 };
 
-key_pressed = function(idx) {
-    var selector, key, newClass;
+key_pressed = function(idx,fromServer) {
+    var selector, key, newClass, newKeypoke;
     selector = '#key-' + idx;
     key = Template.keyboard.keys[idx];
     newClass = key.color + "-key-pressed";
@@ -149,7 +133,31 @@ key_pressed = function(idx) {
     Meteor.setTimeout(function(){
         $(selector).removeClass(newClass);
     },press_timeout);
+
+    // if a local key, tell everyone else about this key being pressed
+    if ( !fromServer )
+    {
+        newKeypoke = { idx: idx, username: Session.get('username') };
+        Meteor.call(
+                    "addKeypoke",
+                    newKeypoke,
+                    function (err, result) {
+                        if (err) {
+                            alert("Could not add keypokechat " + err.reason);
+                        }
+                    }
+               );
+    }
+
     return false;
+};
+
+Template.keyboard.keypokes = function () {
+    return Keypokes.find( {}, {sort: {when:-1} } );
+};
+
+Template.keyboard.updateWhen = function () {
+    return new Date();
 };
 
 Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
@@ -157,4 +165,22 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
         change_keyboard_size();
     });
     change_keyboard_size();
+
+    $(document).keydown(function(e) {
+        if ( !Session.get('new-chat-focus') )
+        {
+            var idx, key;
+            for ( idx = 0; idx < Template.keyboard.keys.length; idx++ )
+            {
+                key = Template.keyboard.keys[idx];
+                if ( key.keyboardCode === e.which )
+                {
+                    key_pressed(idx);
+                    break;
+                }
+            }
+        }
+    });
+
+
 };

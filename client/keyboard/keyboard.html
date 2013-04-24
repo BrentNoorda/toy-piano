@@ -1,4 +1,5 @@
 <template name="keyboard">
+  {{#isolate}}
   <div id="keyboard-case" {{{render_on_resize}}} style="height:{{keyboardHeight}}px;">
     {{#each keys}}
       <div class="{{color}}-key" id="key-{{idx}}" style="left:{{leftOffset}}px;width:{{width}}px;"
@@ -7,4 +8,8 @@
       </div>
     {{/each}}
   </div>
+  {{/isolate}}
+  {{#each keypokes}}
+    {{updateWhen}} {{counter}}  {{idx}} {{when}} {{username}}<br/>
+  {{/each}}
 </template>
