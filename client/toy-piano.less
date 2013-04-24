@@ -17,9 +17,38 @@
 #footer {
     padding: 4px;
     clear: both;
-    background-color: #dddddd;
+    background-color: #eee;
+    font-size: 85%;
+    width: 100%;
 }
 
 .hidden {
     display: none;
+}
+
+#chat {
+    @media only screen and (min-width : unit((@smallScreenMax+1),px)) {
+        float: right;
+        width: 30%;
+    }
+    @media only screen and (max-width : unit(@smallScreenMax,px)) {
+        margin-top: 0.5em;
+        width: 100%;
+        padding-bottom: 0.1em;
+    }
+    background-color: #dca;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    .rounded-corners;
+}
+
+#keyboard {
+    @media only screen and (min-width : unit((@smallScreenMax+1),px)) {
+        float: left;
+        width: 69%;
+    }
+    @media only screen and (max-width : unit(@smallScreenMax,px)) {
+        width: 100%;
+    }
+    /*background-color: orange;*/
 }

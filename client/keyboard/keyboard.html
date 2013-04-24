@@ -1,0 +1,17 @@
+<template name="keyboard">
+  <div id="keyboard-case" {{{render_on_resize}}} style="height:{{keyboardHeight}}px;">
+    {{#each keys}}
+      <div class="{{color}}-key" id="key-{{idx}}" style="left:{{leftOffset}}px;width:{{width}}px;"
+       ontouchstart="return key_pressed('{{idx}}')" onmousedown="return key_pressed('{{idx}}')">
+         {{keyboardKey}}
+      </div>
+    {{/each}}
+  </div>
+  {{#isolate}}
+  {{#each keypokes}}
+    {{! just looping for the byproducts }}
+    <!-- {{updateWhen}} {{counter}} {{idx}} {{when}} {{username}}<br/> -->
+    <i{{{goober idx username}}}></i>
+  {{/each}}
+  {{/isolate}}
+</template>

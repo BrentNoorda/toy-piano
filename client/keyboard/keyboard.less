@@ -1,0 +1,39 @@
+@import "../common.less";
+
+#keyboard-case {
+    width: 100%;
+    position: relative;
+}
+
+.music-key {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1px;
+    text-align:center;
+}
+
+.white-key {
+    .music-key;
+    background-color: white;
+    height: 100%;
+    color: black;
+    padding-top: 1em;
+}
+.white-key-pressed {
+    background-color: grey;
+}
+
+
+.black-key {
+    .music-key;
+    background-color: black;
+    height: 66%;
+    color: white;
+}
+.black-key-pressed {
+    background-color: grey;
+}

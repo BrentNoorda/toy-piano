@@ -1,9 +1,9 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Session, Random, amplify, tidy_spaces*/
+/*globals Session, Random, amplify, tidy_spaces, set_username:true*/
 
 // manage the username in html5 store and in Session
 
-function set_username(username)
+set_username = function(username)
 {
     username = tidy_spaces(username);
     if ( username.length === 0 )
@@ -18,7 +18,7 @@ function set_username(username)
     }
     amplify.store('username',username);
     Session.set('username',username);
-}
+};
 
 function init_username()
 {
