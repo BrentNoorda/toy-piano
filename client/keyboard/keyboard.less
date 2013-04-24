@@ -5,8 +5,7 @@
     position: relative;
 }
 
-.white-key {
-    background-color: white;
+.music-key {
     border-style: solid;
     border-width: 1px;
     border-color: black;
@@ -14,9 +13,14 @@
     top: 0px;
     left: 0px;
     width: 1px;
+    text-align:center;
+}
+
+.white-key {
+    .music-key;
+    background-color: white;
     height: 100%;
     color: black;
-    text-align:center;
     padding-top: 1em;
 }
 .white-key-pressed {
@@ -25,17 +29,10 @@
 
 
 .black-key {
+    .music-key;
     background-color: black;
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 1px;
     height: 66%;
     color: white;
-    text-align:center;
 }
 .black-key-pressed {
     background-color: grey;
