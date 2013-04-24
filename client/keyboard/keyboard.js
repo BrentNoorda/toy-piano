@@ -115,18 +115,18 @@ key_pressed = function(idx,fromServer) {
     key = Template.keyboard.keys[idx];
     newClass = key.color + "-key-pressed";
 
-    if ( Session.get('entering-username') )
-    {
-        $('#enter-username').blur();
-    }
-    if ( Session.get('new-chat-focus') )
-    {
-        $('#new-chat').blur();
-    }
-
     // if a local key, tell everyone else about this key being pressed
     if ( !fromServer )
     {
+        if ( Session.get('entering-username') )
+        {
+            $('#enter-username').blur();
+        }
+        if ( Session.get('new-chat-focus') )
+        {
+            $('#new-chat').blur();
+        }
+
         newKeypoke = { idx: idx, username: Session.get('username') };
         Meteor.call(
                     "addKeypoke",
