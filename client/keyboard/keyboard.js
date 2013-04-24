@@ -160,6 +160,14 @@ Template.keyboard.updateWhen = function () {
     return new Date();
 };
 
+Template.keyboard.goober = function (idx,username) {
+    if ( username !== Session.get('username') )
+    {
+        key_pressed(idx,true);
+    }
+};
+
+
 Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
     $(window).resize(function(evt) {
         change_keyboard_size();

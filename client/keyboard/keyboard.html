@@ -9,7 +9,11 @@
     {{/each}}
   </div>
   {{/isolate}}
+  {{#isolate}}
   {{#each keypokes}}
-    {{updateWhen}} {{counter}}  {{idx}} {{when}} {{username}}<br/>
+    {{! just looping for the byproducts }}
+    <!-- {{updateWhen}} {{counter}} {{idx}} {{when}} {{username}}<br/> -->
+    <i{{{goober idx username}}}></i>
   {{/each}}
+  {{/isolate}}
 </template>
