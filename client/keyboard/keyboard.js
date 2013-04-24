@@ -124,6 +124,21 @@ key_pressed = function(idx,fromServer) {
         $('#new-chat').blur();
     }
 
+    // if a local key, tell everyone else about this key being pressed
+    if ( !fromServer )
+    {
+        newKeypoke = { idx: idx, username: Session.get('username') };
+        Meteor.call(
+                    "addKeypoke",
+                    newKeypoke,
+                    function (err, result) {
+                        if (err) {
+                            alert("Could not add keypokechat " + err.reason);
+                        }
+                    }
+               );
+    }
+
     try {
         key.audio.pause();
     } catch(e1) { } // can be a problem on iphone
@@ -142,21 +157,6 @@ key_pressed = function(idx,fromServer) {
     Meteor.setTimeout(function(){
         $(selector).removeClass(newClass);
     },press_timeout);
-
-    // if a local key, tell everyone else about this key being pressed
-    if ( !fromServer )
-    {
-        newKeypoke = { idx: idx, username: Session.get('username') };
-        Meteor.call(
-                    "addKeypoke",
-                    newKeypoke,
-                    function (err, result) {
-                        if (err) {
-                            alert("Could not add keypokechat " + err.reason);
-                        }
-                    }
-               );
-    }
 
     return false;
 };
