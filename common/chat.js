@@ -29,7 +29,7 @@ Meteor.methods({
             //Chats.remove({when : {$lt : oldest.time }});
         }
 
-        // Insert movie (simulate on client, do it on server)
+        // Insert chat (simulate on client, do it on server)
         return Chats.insert(newChat);
     }
 });
