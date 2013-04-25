@@ -148,7 +148,7 @@ key_pressed = function(idx,fromServer) {
     key.audio.play();
 
     keyEl = $(selector);
-    nameDiv = $('<div class="pokey-name"></div>').text(Session.get('username'));
+    nameDiv = $('<div class="pokey-name"></div>').text(fromServer ? fromServer : Session.get('username'));
     keyEl.append(nameDiv);
 
     if ( key.timeout !== null )
@@ -179,7 +179,7 @@ Template.keyboard.updateWhen = function () {
 Template.keyboard.goober = function (idx,username) {
     if ( username !== Session.get('username') )
     {
-        key_pressed(idx,true);
+        key_pressed(idx,username);
     }
 };
 
