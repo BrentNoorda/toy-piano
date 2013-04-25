@@ -110,7 +110,7 @@ Template.keyboard.render_on_resize = function() {
 };
 
 key_pressed = function(idx,fromServer) {
-    var selector, key, newClass, newKeypoke;
+    var selector, key, newClass, newKeypoke, nameDiv, keyEl;
     selector = '#key-' + idx;
     key = Template.keyboard.keys[idx];
     newClass = key.color + "-key-pressed";
@@ -146,16 +146,23 @@ key_pressed = function(idx,fromServer) {
         key.audio.currentTime=0;
     } catch(e2) { } // can be a problem on iphone
     key.audio.play();
+
+    keyEl = $(selector);
+    nameDiv = $('<div class="pokey-name"></div>').text(Session.get('username'));
+    keyEl.append(nameDiv);
+
     if ( key.timeout !== null )
     {
         Meteor.clearTimeout(key.timeout);
     }
     else
     {
-        $(selector).addClass(newClass);
+        keyEl.addClass(newClass);
     }
+
     Meteor.setTimeout(function(){
-        $(selector).removeClass(newClass);
+        keyEl.removeClass(newClass);
+        nameDiv.remove();
     },press_timeout);
 
     return false;
