@@ -9,7 +9,7 @@
   {{/isolate}}
   <div id="chats">
     {{#each chats}}
-      <div class="old-chat old-old-chat" id="chat-{{_id}}" {{fade_in _id}}>
+      <div class="old-chat old-old-chat" id="chat-{{_id}}" {{fade_in _id text}}>
         <span class="chat-username">{{username}}:</span> {{text}}
       </div>
     {{/each}}
