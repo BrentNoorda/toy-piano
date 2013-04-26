@@ -9,7 +9,18 @@ Template.chat.chatter_full_height = null;   // will be calculated first time thi
 Session.set('new-chat','');
 Session.set('new-chat-focus',false);
 
-Template.chat.fade_in = function(_id) {
+
+//Template.chat.rendered = function() {
+//    Meteor.defer(function() {
+//        console.log("Template.chat.rendered");
+//    });
+//};
+
+Template.chat.fade_in = function(_id,text) {
+    //if ( -1 !== text.indexOf('alert') )
+    //{
+    //    alert ( 'render message "' + text + '"' );
+    //}
     Meteor.setTimeout(function() {
         $('#chat-'+_id).show(hide_chat_time,function(){
             $(this).animate({opacity:1},{duration:'slow',complete:function(){
