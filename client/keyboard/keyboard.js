@@ -1,10 +1,11 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals $, Template, Session, Meteor, Keypokes, window, key_pressed:true, Audio, alert*/
+/*globals $, Template, Session, Meteor, Keypokes, window, key_pressed:true, Audio, alert, Random, console*/
 
 var keyboardWidth = 50;  // changed whenever screen size changes
 var white_key_count;
 Template.keyboard.keyboardHeight = 10;
 var press_timeout = 250;
+var runId = Random.id();   // meteor claims this is "likely to be unique"
 
 Template.keyboard.keys = [
     // list the white keys first (so display will put the black ones on top)
@@ -110,7 +111,7 @@ Template.keyboard.render_on_resize = function() {
 };
 
 key_pressed = function(idx,fromServer) {
-    var selector, key, newClass, newKeypoke, nameDiv, keyEl;
+    var selector, key, newClass, nameDiv, keyEl;
     selector = '#key-' + idx;
     key = Template.keyboard.keys[idx];
     newClass = key.color + "-key-pressed";
@@ -127,16 +128,18 @@ key_pressed = function(idx,fromServer) {
             $('#new-chat').blur();
         }
 
-        newKeypoke = { idx: idx, username: Session.get('username') };
         Meteor.call(
-                    "addKeypoke",
-                    newKeypoke,
-                    function (err, result) {
-                        if (err) {
-                            alert("Could not add keypokechat " + err.reason);
-                        }
-                    }
-               );
+            "addKeypoke",
+            runId,
+            idx,
+            Session.get('username'),
+            false,
+            function (err, result) {
+                if (err) {
+                    alert("Could not add keypoke " + err.reason);
+                }
+            }
+        );
     }
 
     try {
@@ -172,17 +175,8 @@ Template.keyboard.keypokes = function () {
     return Keypokes.find( {}, {sort: {when:-1} } );
 };
 
-Template.keyboard.updateWhen = function () {
-    return new Date();
-};
-
-Template.keyboard.goober = function (idx,username) {
-    if ( username !== Session.get('username') )
-    {
-        key_pressed(idx,username);
-    }
-};
-
+var gPreviousIdx;
+var gPreviousUsername;
 
 Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
     $(window).resize(function(evt) {
@@ -206,5 +200,31 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
         }
     });
 
+    // subscribe to message about all keypokes from all other users
+    Meteor.subscribe("keypokes",runId);
 
+    Meteor.default_connection.registerStore('keypokes', {
+        update: function (msg) {
+            if ( msg.fields.idx === -1 )
+            {
+                // ignore these first calls
+                console.log("ignore first call");
+            }
+            else
+            {
+                console.log("wo ho, got something");
+                if ( msg.fields.idx !== undefined )
+                {
+                    gPreviousIdx = msg.fields.idx;
+                }
+                if ( msg.fields.username !== undefined )
+                {
+                    gPreviousUsername = msg.fields.username;
+                }
+                console.log(msg.id + " " + msg.fields.idx + " " + msg.fields.username);
+                console.log("about to poke " + gPreviousIdx + " " + gPreviousUsername);
+                Meteor.setTimeout(function(){key_pressed(gPreviousIdx,gPreviousUsername);},0);
+            }
+        }
+  });
 };
