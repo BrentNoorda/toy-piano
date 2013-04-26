@@ -1,6 +1,8 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
 /*globals Meteor, Keypokes:true*/
 
+GET RID OF THIS COLLECTION AND DO WHAT'S IN ~/not_my_projects/meteor/packages/tinytest/tinytest_server.js
+
 Keypokes = new Meteor.Collection("keypokes");
 
 Meteor.methods({
