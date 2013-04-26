@@ -205,14 +205,8 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
 
     Meteor.default_connection.registerStore('keypokes', {
         update: function (msg) {
-            if ( msg.fields.idx === -1 )
+            if ( msg.fields.idx !== -1 ) // ignore these first calls
             {
-                // ignore these first calls
-                console.log("ignore first call");
-            }
-            else
-            {
-                console.log("wo ho, got something");
                 if ( msg.fields.idx !== undefined )
                 {
                     gPreviousIdx = msg.fields.idx;
@@ -221,8 +215,8 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
                 {
                     gPreviousUsername = msg.fields.username;
                 }
-                console.log(msg.id + " " + msg.fields.idx + " " + msg.fields.username);
-                console.log("about to poke " + gPreviousIdx + " " + gPreviousUsername);
+                //console.log(msg.id + " " + msg.fields.idx + " " + msg.fields.username);
+                //console.log("about to poke " + gPreviousIdx + " " + gPreviousUsername);
                 Meteor.setTimeout(function(){key_pressed(gPreviousIdx,gPreviousUsername);},0);
             }
         }

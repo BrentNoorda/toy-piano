@@ -7,22 +7,22 @@
 var subscribedClients = {}; // will add publish "self" object based on runId
 var forceUpdater = 0; // will cycle through a bunch of values just to force updates
 
-function showSubscribedClients()
-{
-    console.log('');
-    console.log("subscribedClients:");
-    _.each(subscribedClients,function(value,key) {
-        var arrayOut = '';
-        _.each(value,function(element,index){
-            if ( index !== 0 )
-            {
-                arrayOut += ',';
-            }
-            arrayOut += 'subscriber';
-        });
-        console.log(" " + key + ':[' + arrayOut + ']');
-    });
-}
+//function showSubscribedClients()
+//{
+//    console.log('');
+//    console.log("subscribedClients:");
+//    _.each(subscribedClients,function(value,key) {
+//        var arrayOut = '';
+//        _.each(value,function(element,index){
+//            if ( index !== 0 )
+//            {
+//                arrayOut += ',';
+//            }
+//            arrayOut += 'subscriber';
+//        });
+//        console.log(" " + key + ':[' + arrayOut + ']');
+//    });
+//}
 
 
 Meteor.publish("keypokes", function(runId) {
@@ -37,19 +37,19 @@ Meteor.publish("keypokes", function(runId) {
     }
 
     self.onStop(function () {
-        console.log("removed keypokes client " + runId);
+        //console.log("removed keypokes client " + runId);
         subscribedClients[runId] = _.without(subscribedClients[runId], self);
         if ( subscribedClients[runId].length === 0 )
         {
             delete subscribedClients[runId];
         }
-        showSubscribedClients();
+        //showSubscribedClients();
     });
 
     self.added('keypokes', runId, {idx:-1});
 
-    console.log("added keypokes client " + runId);
-    showSubscribedClients();
+    //console.log("added keypokes client " + runId);
+    //showSubscribedClients();
 
     self.ready();
 });
@@ -65,7 +65,7 @@ Meteor.methods({
             _.each(clients,function(client,index) {
                 if ( (clientId !== runId) || tellMyself )
                 {
-                    console.log("ALERT clientId " + clientId + " # " + index + " about keypoke");
+                    //console.log("ALERT clientId " + clientId + " # " + index + " about keypoke");
                     client.changed('keypokes', clientId, fields);
                 }
             });
