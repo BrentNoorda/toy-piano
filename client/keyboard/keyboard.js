@@ -4,7 +4,7 @@
 var keyboardWidth = 50;  // changed whenever screen size changes
 var white_key_count;
 Template.keyboard.keyboardHeight = 10;
-var press_timeout = 1250;
+var press_timeout = 333;
 var runId = Random.id();   // meteor claims this is "likely to be unique"
 
 Template.keyboard.keys = [
@@ -114,7 +114,8 @@ Template.keyboard.render_on_resize = function() {
 };
 
 key_pressed = function(idx,fromServer) {
-    var key = Template.keyboard.keys[idx];
+    var key = Template.keyboard.keys[idx],
+        self_latency = Session.get('self-latency');
 
     function tell_server_about_this_keystroke()
     {
@@ -132,7 +133,7 @@ key_pressed = function(idx,fromServer) {
             runId,
             idx,
             Session.get('username'),
-            false,
+            self_latency,
             function (err, result) {
                 if (err) {
                     alert("Could not add keypoke " + err.reason);
@@ -181,13 +182,19 @@ key_pressed = function(idx,fromServer) {
         key.audio.play();
     }
 
-    Meteor.setTimeout(play_audio,0);
+    if ( !self_latency || fromServer )
+    {
+        Meteor.setTimeout(play_audio,0);
+    }
     if ( !fromServer )
     {
         // if a local key, tell everyone else about this key being pressed
         Meteor.setTimeout(tell_server_about_this_keystroke,0);
     }
-    show_keypress_visually();
+    if ( !self_latency || fromServer )
+    {
+        show_keypress_visually();
+    }
 
     return false;
 };

@@ -9,7 +9,20 @@
     {{> chat}}
   </div>
   <div id="footer">
-    <a href="https://github.com/BrentNoorda/toy-piano" target="ghub">github project home</a>
-    <a style="float:right" href="http://dl.dropboxusercontent.com/u/41075/brentnoorda/index.html" target="meme">my home</a>
+    <table width="100%">
+      <tr>
+        <td width="33%" style="text-align:left">
+         <a href="https://github.com/BrentNoorda/toy-piano" target="ghub">on github</a>
+        </td>
+        <td stylwidth="33%" style="text-align:center">
+          {{#isolate}}
+            <input id="self-latency" type="checkbox" {{{self_latency}}}/> self latency
+          {{/isolate}}
+        </td>
+        <td width="33%" style="text-align:right">
+          <a href="http://dl.dropboxusercontent.com/u/41075/brentnoorda/index.html" target="meme">author</a>
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
