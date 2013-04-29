@@ -16,24 +16,31 @@ Session.set('new-chat-focus',false);
 //    });
 //};
 
-Template.chat.fade_in = function(_id,text) {
-    //if ( -1 !== text.indexOf('alert') )
+Template.chat.fade_in = function(_id) {
+    //if ( -1 !== this.text.indexOf('alert') )
     //{
-    //    alert ( 'render message "' + text + '"' );
+    //    alert ( 'render message "' + this.text + '"' );
     //}
-    Meteor.setTimeout(function() {
-        $('#chat-'+_id).show(hide_chat_time,function(){
-            $(this).animate({opacity:1},{duration:'slow',complete:function(){
-                $(this).removeClass('old-old-chat').addClass('new-old-chat');
-            }});
-        });
-    },0);
-    return '';
+    if ( this.localVersion )
+    {
+        return 'style="display:none;"';
+    }
+    else
+    {
+        Meteor.setTimeout(function() {
+            $('#chat-'+_id).show(hide_chat_time,function(){
+                $(this).animate({opacity:1},{duration:'slow',complete:function(){
+                    $(this).removeClass('old-old-chat').addClass('new-old-chat');
+                }});
+            });
+        },0);
+        return '';
+    }
 };
 
 Template.chat.submit_chat = function(tmpl)
 {
-	var newChat = { text: Session.get('new-chat'), username: Session.get('username') };
+	var newChat = { localVersion:true, text: Session.get('new-chat'), username: Session.get('username') };
     Session.set('new-chat','');
 
 	Meteor.call(
