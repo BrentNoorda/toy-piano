@@ -4,7 +4,7 @@
 var keyboardWidth = 50;  // changed whenever screen size changes
 var white_key_count;
 Template.keyboard.keyboardHeight = 10;
-var press_timeout = 250;
+var press_timeout = 333;
 var runId = Random.id();   // meteor claims this is "likely to be unique"
 
 Template.keyboard.keys = [
@@ -26,7 +26,7 @@ Template.keyboard.keys = [
     { note: 'a#', audiofile: 'as', keyboardKey: 'I' }
 ];
 
-function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .timeout, .color, .audio, .keyboardCode
+function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .visual, .color, .audio, .keyboardCode
 {
     var i, key;
     white_key_count = 0;
@@ -36,7 +36,7 @@ function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, 
         key.idx = i;
         key.leftOffset = 1;
         key.width = 1;
-        key.timeout = null;
+        key.visual = null;
         key.audio = new Audio(key.audiofile + ".mp3");
         key.keyboardCode = key.keyboardKey.charCodeAt(0);
         if ( key.note.length === 1 )
@@ -64,8 +64,11 @@ function change_keyboard_size()
         for ( i = 0; i < Template.keyboard.keys.length; i++ )
         {
             key = Template.keyboard.keys[i];
-            Meteor.clearTimeout(key.timeout);
-            key.timeout = null;
+            if ( key.visual !== null )
+            {
+                Meteor.clearTimeout(key.visual.timeout);
+            }
+            key.visual = null;
             if ( key.color === "white" )
             {
                 // white key
@@ -111,13 +114,10 @@ Template.keyboard.render_on_resize = function() {
 };
 
 key_pressed = function(idx,fromServer) {
-    var selector, key, newClass, nameDiv, keyEl;
-    selector = '#key-' + idx;
-    key = Template.keyboard.keys[idx];
-    newClass = key.color + "-key-pressed";
+    var key = Template.keyboard.keys[idx],
+        self_latency = Session.get('self-latency');
 
-    // if a local key, tell everyone else about this key being pressed
-    if ( !fromServer )
+    function tell_server_about_this_keystroke()
     {
         if ( Session.get('entering-username') )
         {
@@ -133,7 +133,7 @@ key_pressed = function(idx,fromServer) {
             runId,
             idx,
             Session.get('username'),
-            false,
+            self_latency,
             function (err, result) {
                 if (err) {
                     alert("Could not add keypoke " + err.reason);
@@ -142,31 +142,59 @@ key_pressed = function(idx,fromServer) {
         );
     }
 
-    try {
-        key.audio.pause();
-    } catch(e1) { } // can be a problem on iphone
-    try {
-        key.audio.currentTime=0;
-    } catch(e2) { } // can be a problem on iphone
-    key.audio.play();
-
-    keyEl = $(selector);
-    nameDiv = $('<div class="pokey-name"></div>').text(fromServer ? fromServer : Session.get('username'));
-    keyEl.append(nameDiv);
-
-    if ( key.timeout !== null )
+    function show_keypress_visually()
     {
-        Meteor.clearTimeout(key.timeout);
-    }
-    else
-    {
-        keyEl.addClass(newClass);
+        var selector, newClass, nameDiv, keyEl;
+        selector = '#key-' + idx;
+        newClass = key.color + "-key-pressed";
+
+        keyEl = $(selector);
+
+        if ( key.visual !== null )
+        {
+            Meteor.clearTimeout(key.visual.timeout);
+            key.visual.nameDiv.remove();
+        }
+        else
+        {
+            key.visual = { };
+            keyEl.addClass(newClass);
+        }
+
+        key.visual.nameDiv = $('<div class="pokey-name"></div>').text(fromServer ? fromServer : Session.get('username'));
+        keyEl.append(key.visual.nameDiv);
+
+        key.visual.timeout = Meteor.setTimeout(function(){
+            keyEl.removeClass(newClass);
+            key.visual.nameDiv.remove();
+            key.visual = null;
+        },press_timeout);
     }
 
-    Meteor.setTimeout(function(){
-        keyEl.removeClass(newClass);
-        nameDiv.remove();
-    },press_timeout);
+    function play_audio()
+    {
+        try {
+            key.audio.pause();
+        } catch(e1) { } // can be a problem on iphone
+        try {
+            key.audio.currentTime=0;
+        } catch(e2) { } // can be a problem on iphone
+        key.audio.play();
+    }
+
+    if ( !self_latency || fromServer )
+    {
+        Meteor.setTimeout(play_audio,0);
+    }
+    if ( !fromServer )
+    {
+        // if a local key, tell everyone else about this key being pressed
+        Meteor.setTimeout(tell_server_about_this_keystroke,0);
+    }
+    if ( !self_latency || fromServer )
+    {
+        show_keypress_visually();
+    }
 
     return false;
 };
