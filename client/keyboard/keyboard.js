@@ -199,10 +199,6 @@ key_pressed = function(idx,fromServer) {
     return false;
 };
 
-Template.keyboard.keypokes = function () {
-    return Keypokes.find( {}, {sort: {when:-1} } );
-};
-
 var gPreviousIdx;
 var gPreviousUsername;
 
