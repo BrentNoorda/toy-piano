@@ -45,7 +45,7 @@ $(document).ready(function() {
         // sometimes this code might run before the server has told us we're debugging, so wait
         if ( DEBUG === undefined )
         {
-            Meteor.setTimeout(attach_jquery_warnings_if_we_are_debugging,0);
+            Meteor.setTimeout(attach_jquery_warnings_if_we_are_debugging,1);
         }
         else
         {
