@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals alert, $, window, DEBUG*/
+/*globals alert, $, window, DEBUG, Meteor*/
 
 $(document).ready(function() {
     function alter_$_to_warn_if_selector_does_not_exist()
@@ -40,8 +40,20 @@ $(document).ready(function() {
         window.$ = myjQuery;
     }
 
-    if ( DEBUG )
+    function attach_jquery_warnings_if_we_are_debugging()
     {
-        alter_$_to_warn_if_selector_does_not_exist();
+        // sometimes this code might run before the server has told us we're debugging, so wait
+        if ( DEBUG === undefined )
+        {
+            Meteor.setTimeout(attach_jquery_warnings_if_we_are_debugging,1);
+        }
+        else
+        {
+            if ( DEBUG )
+            {
+                alter_$_to_warn_if_selector_does_not_exist();
+            }
+        }
     }
+    attach_jquery_warnings_if_we_are_debugging();
 });

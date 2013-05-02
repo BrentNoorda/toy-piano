@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals $, Template, Session, Meteor, Keypokes, window, key_pressed:true, Audio, alert, Random, console*/
+/*globals $, Template, Session, Meteor, window, key_pressed:true, Audio, alert, Random, console, DEBUG*/
 
 var keyboardWidth = 50;  // changed whenever screen size changes
 var white_key_count;
@@ -110,12 +110,18 @@ Template.keyboard.rendered = function() {
 Template.keyboard.render_on_resize = function() {
     Session.get('keyboardWidth');
     Session.get('keyboardHeight');
+    change_keyboard_size();
     return '';
 };
 
+var prevSendKeyTime = 0; // used to "prime the pump" if it's been a while since we sent anything
+var max_time_between_pump_priming = 50;
+
 key_pressed = function(idx,fromServer) {
-    var key = Template.keyboard.keys[idx],
-        self_latency = Session.get('self-latency');
+    var key, self_latency, curTime;
+
+    key = Template.keyboard.keys[idx];
+    self_latency = Session.get('self-latency');
 
     function tell_server_about_this_keystroke()
     {
@@ -127,6 +133,32 @@ key_pressed = function(idx,fromServer) {
         {
             $('#new-chat').blur();
         }
+
+        curTime = (new Date()).getTime();
+        if ( DEBUG )
+        {
+            console.log("time since sent last keystroke = " + (curTime - prevSendKeyTime));
+        }
+        if ( max_time_between_pump_priming < (curTime - prevSendKeyTime) )
+        {
+            Meteor.call(
+                "addKeypoke",
+                runId,
+                -1,
+                Session.get('username'),
+                self_latency,
+                function (err, result) {
+                    if (err) {
+                        alert("Could not add keypoke " + err.reason);
+                    }
+                }
+            );
+            if ( DEBUG )
+            {
+                console.log("PRIME THE PUMP!!!!!!!");
+            }
+        }
+        prevSendKeyTime = curTime;
 
         Meteor.call(
             "addKeypoke",
@@ -199,14 +231,10 @@ key_pressed = function(idx,fromServer) {
     return false;
 };
 
-Template.keyboard.keypokes = function () {
-    return Keypokes.find( {}, {sort: {when:-1} } );
-};
-
 var gPreviousIdx;
 var gPreviousUsername;
 
-Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
+Meteor.startup(function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
     $(window).resize(function(evt) {
         change_keyboard_size();
     });
@@ -233,20 +261,28 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
 
     Meteor.default_connection.registerStore('keypokes', {
         update: function (msg) {
-            if ( msg.fields.idx !== -1 ) // ignore these first calls
+            var idx, username;
+
+            if ( msg.fields.idx !== undefined )
             {
-                if ( msg.fields.idx !== undefined )
-                {
-                    gPreviousIdx = msg.fields.idx;
-                }
-                if ( msg.fields.username !== undefined )
-                {
-                    gPreviousUsername = msg.fields.username;
-                }
-                //console.log(msg.id + " " + msg.fields.idx + " " + msg.fields.username);
-                //console.log("about to poke " + gPreviousIdx + " " + gPreviousUsername);
-                Meteor.setTimeout(function(){key_pressed(gPreviousIdx,gPreviousUsername);},0);
+                gPreviousIdx = msg.fields.idx;
             }
+            if ( msg.fields.username !== undefined )
+            {
+                gPreviousUsername = msg.fields.username;
+            }
+            if ( DEBUG )
+            {
+                console.log(msg.id + " " + msg.fields.idx + " " + msg.fields.username);
+                console.log("about to poke " + gPreviousIdx + " " + gPreviousUsername);
+            }
+            idx = gPreviousIdx;
+            username = gPreviousUsername;
+            if ( idx !== -1 ) // ignore these prime-the-pump key calls
+            {
+                key_pressed(idx,username);
+            }
+
         }
   });
-};
+});
