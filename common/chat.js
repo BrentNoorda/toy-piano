@@ -36,3 +36,14 @@ Meteor.methods({
         return Chats.insert(newChat);
     }
 });
+
+if (Meteor.isServer)
+{
+    Meteor.publish('chats', function() {
+        return Chats.find({});
+    });
+}
+if (Meteor.isClient)
+{
+    Meteor.subscribe("chats");
+}
