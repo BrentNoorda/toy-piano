@@ -110,6 +110,7 @@ Template.keyboard.rendered = function() {
 Template.keyboard.render_on_resize = function() {
     Session.get('keyboardWidth');
     Session.get('keyboardHeight');
+    change_keyboard_size();
     return '';
 };
 
