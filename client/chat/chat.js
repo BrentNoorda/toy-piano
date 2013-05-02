@@ -10,12 +10,6 @@ Session.set('new-chat','');
 Session.set('new-chat-focus',false);
 
 
-//Template.chat.rendered = function() {
-//    Meteor.defer(function() {
-//        console.log("Template.chat.rendered");
-//    });
-//};
-
 Template.chat.fade_in = function(_id) {
     //if ( -1 !== this.text.indexOf('alert') )
     //{
@@ -154,11 +148,8 @@ Meteor.startup(function () {
 
     // load globals from chat.less
     el = $('#css-shared-globals');
-    //alert(el.css('background-image'));
-    //alert("el thing = " + decodeURI(el.css('background-image').split('$$$')[1]));
     /*jslint evil:true */
     elObj = eval(decodeURI(el.css('background-image').split('$$$')[1]));
     /*jslint evil:false */
-    //alert("elObj.hideChatTime  = " + elObj.hideChatTime);
     hide_chat_time = elObj.hideChatTime;
 });
