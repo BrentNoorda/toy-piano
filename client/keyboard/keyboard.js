@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals $, Template, Session, Meteor, Keypokes, window, key_pressed:true, Audio, alert, Random, console*/
+/*globals $, Template, Session, Meteor, window, key_pressed:true, Audio, alert, Random, console*/
 
 var keyboardWidth = 50;  // changed whenever screen size changes
 var white_key_count;
@@ -202,7 +202,7 @@ key_pressed = function(idx,fromServer) {
 var gPreviousIdx;
 var gPreviousUsername;
 
-Meteor.startup = function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
+Meteor.startup(function() { // from http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
     $(window).resize(function(evt) {
         change_keyboard_size();
     });
@@ -245,4 +245,4 @@ Meteor.startup = function() { // from http://stackoverflow.com/questions/1418524
             }
         }
   });
-};
+});
