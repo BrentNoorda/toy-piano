@@ -1,29 +1,13 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Meteor, _, console*/
-/* server management of the keypokes */
+/*globals Meteor, _, console, DEBUG*/
 
+// keypoke.js - handle the server receiving key presses from individual clients, then
+//              "broadcasting" that information to those clients.
+//
 // a lot of this is copied from the code in meteor/packages/tinytest/tinytest_server.js
 
 var subscribedClients = {}; // will add publish "self" object based on runId
 var forceUpdater = 0; // will cycle through a bunch of values just to force updates
-
-//function showSubscribedClients()
-//{
-//    console.log('');
-//    console.log("subscribedClients:");
-//    _.each(subscribedClients,function(value,key) {
-//        var arrayOut = '';
-//        _.each(value,function(element,index){
-//            if ( index !== 0 )
-//            {
-//                arrayOut += ',';
-//            }
-//            arrayOut += 'subscriber';
-//        });
-//        console.log(" " + key + ':[' + arrayOut + ']');
-//    });
-//}
-
 
 Meteor.publish("keypokes", function(runId) {
     var self = this;
@@ -43,13 +27,13 @@ Meteor.publish("keypokes", function(runId) {
         {
             delete subscribedClients[runId];
         }
-        //showSubscribedClients();
     });
 
     self.added('keypokes', runId, {idx:-1});
-
-    //console.log("added keypokes client " + runId);
-    //showSubscribedClients();
+    if ( DEBUG )
+    {
+        console.log("added keypokes client " + runId);
+    }
 
     self.ready();
 });
@@ -65,7 +49,10 @@ Meteor.methods({
             _.each(clients,function(client,index) {
                 if ( (clientId !== runId) || tellMyself )
                 {
-                    //console.log("ALERT clientId " + clientId + " # " + index + " about keypoke");
+                    if ( DEBUG )
+                    {
+                        console.log("ALERT clientId " + clientId + " # " + index + " about keypoke");
+                    }
                     client.changed('keypokes', clientId, fields);
                 }
             });
