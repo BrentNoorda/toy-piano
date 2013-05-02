@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals $, Template, Session, Meteor, window, key_pressed:true, Audio, alert, Random, console*/
+/*globals $, Template, Session, Meteor, window, key_pressed:true, Audio, alert, Random, console, DEBUG*/
 
 var keyboardWidth = 50;  // changed whenever screen size changes
 var white_key_count;
@@ -229,6 +229,7 @@ Meteor.startup(function() { // from http://stackoverflow.com/questions/14185248/
 
     Meteor.default_connection.registerStore('keypokes', {
         update: function (msg) {
+            var idx, username;
             if ( msg.fields.idx !== -1 ) // ignore these first calls
             {
                 if ( msg.fields.idx !== undefined )
@@ -239,9 +240,14 @@ Meteor.startup(function() { // from http://stackoverflow.com/questions/14185248/
                 {
                     gPreviousUsername = msg.fields.username;
                 }
-                //console.log(msg.id + " " + msg.fields.idx + " " + msg.fields.username);
-                //console.log("about to poke " + gPreviousIdx + " " + gPreviousUsername);
-                Meteor.setTimeout(function(){key_pressed(gPreviousIdx,gPreviousUsername);},0);
+                if ( DEBUG )
+                {
+                    console.log(msg.id + " " + msg.fields.idx + " " + msg.fields.username);
+                    console.log("about to poke " + gPreviousIdx + " " + gPreviousUsername);
+                }
+                idx = gPreviousIdx;
+                username = gPreviousUsername;
+                Meteor.setTimeout(function(){key_pressed(idx,username);},0);
             }
         }
   });
