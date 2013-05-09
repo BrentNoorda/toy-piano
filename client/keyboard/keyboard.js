@@ -28,8 +28,11 @@ Template.keyboard.keys = [
 
 function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, .visual, .color, .audio, .keyboardCode
 {
-    var i, key;
+    var i, key, audio_file_extension;
     white_key_count = 0;
+
+    audio_file_extension = ( -1 !== navigator.userAgent.indexOf('Firefox') ) ? '.wav' : '.mp3';
+
     for ( i = 0; i < Template.keyboard.keys.length; i++ )
     {
         key = Template.keyboard.keys[i];
@@ -37,7 +40,7 @@ function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, 
         key.leftOffset = 1;
         key.width = 1;
         key.visual = null;
-        key.audio = new Audio(key.audiofile + ".mp3");
+        key.audio = new Audio(key.audiofile + audio_file_extension);
         key.keyboardCode = key.keyboardKey.charCodeAt(0);
         if ( key.note.length === 1 )
         {

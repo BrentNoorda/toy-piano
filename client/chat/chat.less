@@ -1,10 +1,10 @@
 @import "../common.less";
 
-@hide-chat-time: 450;  /* this is shared with chat.less via css-shared-globals */
+@hide-chat-time: 450;  /* this is shared with chat.less via hide-chat-time-global */
 
-#css-shared-globals {
-    background-image: url("about:$$$({hideChatTime:@{hide-chat-time}})$$$");
+#hide-chat-time-global {
     display:none;
+    width: unit(@hide-chat-time,px)
 }
 
 #new-chat {
