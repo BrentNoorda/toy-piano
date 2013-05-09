@@ -1,17 +1,49 @@
 toy-piano - learning about MeteorJS
 ===============
 
-This is my first attempt to play with [MeteorJS](http://meteor.com/) and decide if it really is, as their website proclaims, "A better way to build apps."
+toy-piano is my first attempt to play with [MeteorJS](http://meteor.com/) and decide if it really is, as their website proclaims, "A better way to build apps."
 
-Because Meteor demos emphasize the "live" nature of the environment, supporting any number of users editing simultaneously, I was curious to create something that would test the speed and "liveliness" of a multiuser app. So I built a toy piano where any time someone presses a key that keypress is broadcast to everyone who is logged in. If latency was low enough, I hoped, the people of the internet could play duets, or triplets, or infinets. *(oh what beautful music I hope we'll make)*
+I'll share here what I learned, a bit about how toy-piano works, and overall impressions of MeteorJS.
 
 All of the [soure code is on github](https://github.com/BrentNoorda/toy-piano) and a live demo is here: [http://toy-piano.meteor.com/](http://toy-piano.meteor.com/)
 
-# Running this code on your own computer
+Jump To:
+
+* [Why a toy piano?](#why-toy)
+* [Installing & Running this code on your own computer](#install-and-run)
+
+------------------------------------------------------------------------------
+
+<a name="why-toy"></a>
+# Why a toy piano?
+
+Because Meteor demos emphasize the "live" nature of the environment, supporting any number of users editing simultaneously, I was curious to create something that would test the speed and "liveliness" of a multiuser app. So I built a toy piano where any time someone presses a key that keypress is broadcast to everyone who is logged in. If latency was low enough, I hoped, the people of the internet could play duets, or triplets, or infinets. *(oh what beautful music I hope we'll make)*
+
+------------------------------------------------------------------------------
+
+<a name="install-and-run"></a>
+# Installing & Running this code on your own computer
 
 Here is the first area where MeteorJS really really shines: getting started is trivially fast (I hope all framework makers learn from this).
 
+If you want to run this toy-piano on your own computer (max, windows, linux, I don't care), you don't need to have installed any special versions of languages, tools, libraries, compilers, etc... No, the only thing you need to have already installed are `curl` and `git`. *I'm not kidding*.
 
+Here's the commands to get toy-piano running as a local server on your system.
+
+     $ curl https://install.meteor.com | /bin/sh
+     $ git clone https://github.com/BrentNoorda/toy-piano.git my-toy-piano
+     $ cd my-toy-piano
+     $ meteor
+
+Open your browser to [http://localhost:3000/](http://localhost:3000/) and, voila, you have your own toy piano running on your computer.
+
+All installations of completely new server platforms should be so simple!
+
+### *How do they do this magic?*
+
+MeteorJS, which is build on [NodeJS](http://nodejs.org/), extends
+
+-------------------------------------------------------------------------
 
 JSSince so many MeteoJS demo are built to
 
@@ -30,7 +62,7 @@ Demo: [http://toy-piano.meteor.com/](http://toy-piano.meteor.com/)
 
 don't forget:
 
- * weird way passing size from less to html (hide chat time)
+ * weird way passing size from less to html (hide chat time) and why doesn't meteor make that stuff easier?
  * how sending keystrokes
  * lots of latency stuff
  * DEBUG

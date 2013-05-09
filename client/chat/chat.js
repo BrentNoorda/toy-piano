@@ -147,9 +147,5 @@ Meteor.startup(function () {
     $('#new-chat-submit-div').height(0);
 
     // load globals from chat.less
-    el = $('#css-shared-globals');
-    /*jslint evil:true */
-    elObj = eval(decodeURI(el.css('background-image').split('$$$')[1]));
-    /*jslint evil:false */
-    hide_chat_time = elObj.hideChatTime;
+    hide_chat_time = $('#hide-chat-time-global').width();
 });
