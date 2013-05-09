@@ -13,6 +13,9 @@ Jump To:
 * [Installing & Running this code on your own computer](#install-and-run)
 * [Super-short intro to Meteor development](#super-short)
 * [Quick overview of the toy-piano application hierarchy](#quick-overview-hierarchy)
+* [The interesting bits of toy-piano](#interesting-bits)
+* [Recommendations for web developers - should you be using MeteorJS?](#web-rec)
+* [Recommendations for Meteor Development Group - how to improve your product](#for-mdg-eyes-only)
 
 ------------------------------------------------------------------------------
 
@@ -50,7 +53,7 @@ MeteorJS is built on [NodeJS](http://nodejs.org/). Node developers exercise a pa
 <a name="super-short"></a>
 # Super-short intro to Meteor development
 
-Meteor does a great job of briefly saying what they're all about [here](http://meteor.com/) and [here](http://docs.meteor.com/#sevenprinciples), but I'm going to try to describe even more briefly what I think are the most important Meteor paradigms.
+Meteor does a great job of briefly saying what they're all about [here](http://meteor.com/) and [here](http://docs.meteor.com/#sevenprinciples), but these are the few bits I think are most interesting and important:
 
 * **same language and code on both client and server** - since both the client and the server are javascript, your brain doesn't have to switch ways of thinking - even better, often the code you right will run on both the client and the server (especially true of database code, where the client often has it's own version of the DB to act more quickly)
 * **automatic page updates as data changes** - with it's "reactive" model what you see on the screen is based on what's in the database - as the data changes the screen is just auto-magically updated to match the new data (it can be pretty cool)
@@ -111,14 +114,32 @@ This agnostic view of source hierarchy, along with the templating, makes it easy
 
 Because Meteor gloms all the code together into a single page indiscriminately, and because of Meteor's emphasis on "reactivity", any user behavior in one part of the screen can easily cause a redraw of another, mostly-unrelated part of the screen (which can be an invisible performance problem frequently, and a visible problem when animations show up). This can lead to extra time debugging and muddying the clean templates with lots of   "{{#isolate}}" tags.
 
+Another problem about everything being glommed together you pretty much lose control over load order. So if you're loading one js library that depends on another, you have to understand their poorly-documented load orders, or try to defer initializations with `Meteor.startup()` or jQuery's `$(document).ready()`.
+
 -------------------------------------------------------------------------
 
-JSSince so many MeteoJS demo are built to
+<a name="interesting-bits"></a>
+# The interesting bits of toy-piano
 
-Playing around with MeteorJS. Curious about latency among multiple users, how to do animations in such a renderful environment, and such...
 
-Demo: [http://toy-piano.meteor.com/](http://toy-piano.meteor.com/)
 
+
+-------------------------------------------------------------------------
+
+<a name="web-rec"></a>
+# Recommendations for web developers - should you be using MeteorJS?
+
+
+ this is a great environment for when the state of the data matches the state of the database
+
+
+-------------------------------------------------------------------------
+
+<a name="for-mdg-eyes-only"></a>
+# Recommendations for Meteor Development Group - how to improve your product
+
+
+microcosmic god
 
 
 -------
@@ -135,8 +156,6 @@ don't forget:
  * lots of latency stuff
  * DEBUG
  * when to use isolate, and when not
- * the way to arrange files is super sweet (html with css with js) anywhere in the path
-   -- another example, just create username.js and don't worrry about where to put it
  * the freaking annoying double-display thing
  * they have this template thing going pretty well, but then it breaks where events are found (may as well use jquery)
  * add lots of template stuff as a side-effect (to avoid render?)
@@ -144,8 +163,8 @@ don't forget:
  * add feature to show what is being redrawn
  * our way or the highway
  * load order is annoying, how to make sure one thing is loaded before another
+libraries might not all work exactly - need "smart packages"
+
 
  the meteor people need to make, and mimic, fraking real-worl web sites
 
-
- this is a great environment for when the state of the data matches the state of the database
