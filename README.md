@@ -143,6 +143,7 @@ don't forget:
  * too much magic still (for example had to read lots of source code, put in alerts, etc...)
  * add feature to show what is being redrawn
  * our way or the highway
+ * load order is annoying, how to make sure one thing is loaded before another
 
  the meteor people need to make, and mimic, fraking real-worl web sites
 
