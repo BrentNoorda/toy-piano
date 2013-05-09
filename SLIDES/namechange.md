@@ -1,4 +1,4 @@
-toy-piano - learning about MeteorJS
+toy-piano name-change field - simple Meteor reactive-template stuff <span style="float:right;"> [&#x25B2;](../README.md#interesting-bits)</span>
 ===============
 
 toy-piano is my first attempt to play with [MeteorJS](http://meteor.com/) and decide if it really is, as their website proclaims, "A better way to build apps."
@@ -121,17 +121,22 @@ Another problem about everything being glommed together you pretty much lose con
 <a name="interesting-bits"></a>
 # The interesting bits of code in toy-piano
 
-* **animating fade-ins for the chat window** - Meteor is great at creating and immediately updating a DOM to match the state of your data, but Meteor sucks when you want to animate transition states. [Here's the kludges I used to make animations work.](SLIDES/chatanimation.md)
+* **animating fade-ins for the chat window** - Meteor is great at creating and immediately updating a DOM to match the state of your data, but Meteor sucks when you want to animate transition states. [Read about Meteor animation kludges in toy-piano.](SLIDES/chatanimation.md)
 
-* **changing user name without pressing enter** - Nothing very exciting about this, just a simple introduction to how things are done slightly different in Meteor. [How toy-piano name-change works.](SLIDES/namechange.md)
 
-* **sharing keyboard presses among all worldwide users** - Whenever anyone presses the keyboard, everyone in the world (on this page) is supposed to hear it. [real-time-ish broadcasting with Meteor.](SLIDES/wwkeypress.md)
+
+## blah
+
+### blah
+
+#### blah
 
 
 -------------------------------------------------------------------------
 
 <a name="web-rec"></a>
 # Recommendations for web developers - should you be using MeteorJS?
+
 
  this is a great environment for when the state of the data matches the state of the database
 
@@ -141,16 +146,13 @@ Another problem about everything being glommed together you pretty much lose con
 <a name="for-mdg-eyes-only"></a>
 # Recommendations for Meteor Development Group - how to improve your product
 
-*This top-secret section of unsolicited advice is only for employees of MDG, so unless you work at MDG, [don't read this](SLIDES/mdgadvice.md).*
+
+microcosmic god
+
 
 -------
 
-That's all, folks.  Here's some link reminders:
-
-* [toy-piano on github](https://github.com/BrentNoorda/toy-piano)
-* [toy-piano running on meteor's servers](http://toy-piano.meteor.com/)
-* [all about Meteor](http://meteor.com/)
-* [all about me](http://dl.dropboxusercontent.com/u/41075/brentnoorda/index.html)
+*more info at [github:BrentNoorda/toy-piano](https://github.com/BrentNoorda/toy-piano)*
 
 
 
@@ -174,3 +176,6 @@ libraries might not all work exactly - need "smart packages"
 
  the meteor people need to make, and mimic, fraking real-worl web sites
 
+------
+
+&nbsp;&nbsp;&nbsp;&nbsp; [&lt;&lt; back](../README.md#interesting-bits)
