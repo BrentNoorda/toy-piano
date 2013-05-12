@@ -136,6 +136,7 @@ Another problem about everything being glommed together you pretty much lose con
 <a name="web-rec"></a>
 # Recommendations for web developers - should you be using MeteorJS?
 
+Yes. It is SO easy to put together a single-page web site????
  this is a great environment for when the state of the data matches the state of the database
 
 
