@@ -1,9 +1,7 @@
-Dear Meteor Development Group, here's how to make Meteor more better <span style="float:right;"> [&#x25B2;](../README.md#for-mdg-eyes-only)</span>
+Dear MeteorJS Development Group, here's 1000 things you need to do to achieve your mission <span style="float:right;"> [&#x25B2;](../README.md#for-mdg-eyes-only)</span>
 ===============
 
-In working with Meteor for a short while I'm impressed that you guys are off to such a great start on you radical and audacious goal of solving all the web-related software development problems. Right On!
-
-But no more praise, for now. Instead here's a few suggestions on what you should be up to to improve Meteor. *My advice, and a few bucks, will buy you a cup of Blue Bottle coffee, so I hope you take if for all it's worth.*
+*My advice, and a few bucks, will buy you a small cup of Blue Bottle coffee. You're welcome.*
 
 # 1) Figure out the animation stuff
 
@@ -21,13 +19,13 @@ I wrote about my own struggle with this in [animating fade-ins for the chat wind
 
 It is not clear how to share the load over more than one server. Yes, a node server can suppot a lot of clients, but tens or hundreds of thousands on a single server? Millions? How am I going to support toy-piano once it becomes really really popular? Can I invest my time on Meteor if I hope to get big?
 
-# how can I get to zero down time?
+# 3) how can I get to zero down time?
 
 It's cools that each time I deploy all of my users are automatically updated. But that's also totally uncool. What if they're in the middle of something, like entering a text field, or playing a lovely toy-piano sinata?
 
-You need a plan for deploying more gracefully, so that my users see no downtime.
+You need a plan for deploying more gracefully, so that my users see no downtime. How do I restart the one server without each user seeing an interruptive screen redraw?
 
-# is latency compensation just a gimmick?
+# 4) is latency compensation just a gimmick?
 
 From [your home page](http://meteor.com/):
 
@@ -39,7 +37,7 @@ Again, that's super cool. But just because you CAN do this does not mean you usu
 
 I suggest working instead on making the server response just be faster, and then you can make latency compensation a nice feature that is no longer the default.
 
-# give us a debug-time what-is-happening view
+# 5) give us a debug-time what-is-happening view
 
 Meteor is doing clever things with reactive, live updates, figuring out the minimum changes needed and performing them as lively as possible. The problem is, once a program reaches anything above minimal complexity, the inter-connectedness between parts quickly becomes complex. This is not too complex for the Meteor framework, which happily follows it's programmed logic forever, but for the developer who is left wondering "why did this change here cause that change there?"
 
@@ -57,7 +55,7 @@ I want at least four levels of this debugging help.
 
 4) a full debugging environment
 
-# Go a step further combining html(handlebars), css(less), & javascript...
+# 6) go a step further combining html(handlebars), css(less), & javascript...
 
 I like that you're combining so many components together. I like putting handlebars and less javascript files into combined directories, and further knowing that your tools will bundle them all together. I like that the server language is the same as the client, and much of the time (as with DB calls) the code is actually the same on both client and server.
 
@@ -67,41 +65,50 @@ Those are steps in the right direction. Can you take further steps in melding al
 * how about combining js code directly into the html files (e.g. don't call out to template files, but have that code fit right there in the html)?
 * how about templates for css classes, the same way you have templates for html? I don't know what that would look like, but it would be cool. Why doesn't css get to be as flexible as html or javascript?
 
-# ...and events, do something revolutionary with events
+### ...and events, do something revolutionary with events
 
+you guys are revolutionizing the reactive programmatic html system. Hurray. But then when events are involved, you get down to code like this:
 
+    Template.chat.events({
+        'focus #new-chat': function (e,tmpl) {
+            ...
+        }
+    });
 
+Boo! I don't want my events relegated to a different paradigm than the rest of the html template library. Using a scheme that is not even better than jQuery but, worse, more limited.
 
-# multiple pages done right, dammit
+Get those events integrated with the html elements and their templates. Not as a separate "event selector" thing. I don't know the event solution, but what you have isn't revolutionary enough.
 
-# get control of the smart package environment
+# 7) multiple pages done right, dammit
 
-# develop demo version of all of today's most-popular web sites and applications
+Accept it: Not everything is or should be a "single web page". Sometimes (usually) it just makes sense for a web site to contain multiple web pages! All the workaround I saw for this are hacks that still get all those code into a single web page and only show parts of it at a time.
 
-This is the biggest bit of advice, and all of the others would probably fall out of this.
+Support multiple web pages! Accept it and do it. It will be easy!
 
-# make the phone developers make better browsers
+# 8) get control of the smart package environment
 
-you guys have impressive credentials. convince your buddies at Apple and Google to stop making such sucky browsers so Meteor can shine on a browser as well as it does on a desktop
+It's great that it's not too difficult to make a smart package, or to work with other tools via DDP. Now it's time to make this useful by making all the smart packages easy to find, to add some editorial control over reviewing them, and to insist that every smart package putting itself into your "marketplace" provide good documentation and working examples.
 
-# how to restart server without redrawing client?
+# 9) concentrate on mobile
 
+Most of your meteor apps (your own examples, and those found on [Made with Meteor](http://madewith.meteor.com/)) look pretty crappy on mobile browsers. Fix that by concentrating on that.
 
-# charge something for something
+# 10) charge something for something
 
+Is Meteor going to exist three years from now? Do I want to put time into a platform that I don't know will exist three years from now? How can you convince me you'll stick around?
 
-don't forget:
+I'll tell you how I'll be convinced: when you get some revenue; when you figure out how to charge something for something.
 
- * the freaking annoying double-display thing
- * they have this template thing going pretty well, but then it breaks where events are found (may as well use jquery)
- * too much magic still (for example had to read lots of source code, put in alerts, etc...)
- * our way or the highway
- * load order is annoying, how to make sure one thing is loaded before another
-libraries might not all work exactly - need "smart packages"
+# 11,12,13...1000) develop working, functional, demo version of all of today's most-popular web sites and applications and gizmos
 
+**This is BY FAR the most important recommendation. All of the others recommendations would probably fall out of this one.**
 
- the meteor people need to make, and mimic, fraking real-worl web sites
+Instead of producing samples and demos that show what Meteor excels at, you need to produce samples of how to use Meteor to reproduce the most influential pages and apps of today. Show us best practices for reproducing today's hip new sites (e.g. Pinterest, Facebook, Netflix? Yammer?) and the cool stuff used in them (menus, drop downs, fades, infinite scrolling, ads, contextual popups, and on and on...).
 
-------
+While doing so, and eating your own dog food doing it, you'll be the first to come across all the challenges your users are going to hit, and the first to come up with the solutions (even when it means, gulp, re-evaluating your assumptions about your own platform).
+
+In other words, don't show us how to do what you're best it. Show us how you're best at doing what we want to do, and if you're not the best at *that*, then become the best.
+
+----------------------------------------------------------------
 
 &nbsp;&nbsp;&nbsp;&nbsp; [&lt;&lt; back](../README.md#for-mdg-eyes-only)

@@ -1,4 +1,4 @@
-toy-piano - learning about MeteorJS
+passing a variable from css/less to javascript <span style="float:right;"> [&#x25B2;](../README.md#interesting-bits)</span>
 ===============
 
 toy-piano is my first attempt to play with [MeteorJS](http://meteor.com/) and decide if it really is, as their website proclaims, "A better way to build apps."
@@ -15,7 +15,7 @@ Jump To:
 * [Quick overview of the toy-piano application hierarchy](#quick-overview-hierarchy)
 * [The interesting bits of code in toy-piano](#interesting-bits)
 * [Recommendations for web developers - should you be using MeteorJS?](#web-rec)
-* [Recommendations for Meteor Development Group](#for-mdg-eyes-only)
+* [Recommendations for Meteor Development Group - how to improve your product](#for-mdg-eyes-only)
 
 ------------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ Here's the commands to get toy-piano running as a local server on your system.
 
 Open your browser to [http://localhost:3000/](http://localhost:3000/) and, voila, you have your own toy piano running on your computer.
 
-All installations of completely new server platforms should be so simple! (Are you reading this, makers of other frameworks? I'm fed up with the bunch of you and you're "five easy steps to install this framework, provided you're already running version X of this, which has it's own five easy steps, and Y of that thing with it's own five easy steps, and NOT running version Z of another thing, which is incompatible.)
+All installations of completely new server platforms should be so simple!
 
 ### *How do they do this so-easy-to-install magic?*
 
@@ -121,20 +121,22 @@ Another problem about everything being glommed together you pretty much lose con
 <a name="interesting-bits"></a>
 # The interesting bits of code in toy-piano
 
-* **[animating fade-ins for the chat window](SLIDES/chatanimation.md)** - Meteor is great at creating and immediately updating a DOM to match the state of your data, but Meteor sucks when you want to animate transition states.
+* **animating fade-ins for the chat window** - Meteor is great at creating and immediately updating a DOM to match the state of your data, but Meteor sucks when you want to animate transition states. [Read about Meteor animation kludges in toy-piano.](SLIDES/chatanimation.md)
 
-* **[changing user name without pressing enter](SLIDES/namechange.md)** - Nothing very exciting about this, just a simple introduction to how things are done slightly different in Meteor.
 
-* **[sharing keyboard presses among all worldwide users](SLIDES/wwkeypress.md)** - Whenever anyone presses the keyboard, everyone in the world (on this page) is supposed to hear it.
 
-* **[passing variables from css/less to javascript](SLIDES/sharelessvar.md)** - A silly solution to change just one parameter in a .less file and have the .js file be able to use it.
+## blah
 
-* **[a client/server DEBUG variable based on environment](SLIDES/stupiddebugkludge.md)** - How to have a DEBUG variable available to both client and server code. I did this really poorly and would like a better solution.
+### blah
+
+#### blah
+
 
 -------------------------------------------------------------------------
 
 <a name="web-rec"></a>
 # Recommendations for web developers - should you be using MeteorJS?
+
 
  this is a great environment for when the state of the data matches the state of the database
 
@@ -142,26 +144,29 @@ Another problem about everything being glommed together you pretty much lose con
 -------------------------------------------------------------------------
 
 <a name="for-mdg-eyes-only"></a>
-# Recommendations for Meteor Development Group
+# Recommendations for Meteor Development Group - how to improve your product
 
-*Unsolicited advice for the Meteor developers; so, unless you work at MDG, don't read this [advice for MDG](SLIDES/mdgadvice.md).*
+
+microcosmic god
+
 
 -------
 
-That's all, folks.  Here's some link reminders:
-
-* [toy-piano on github](https://github.com/BrentNoorda/toy-piano)
-* [toy-piano running on meteor's servers](http://toy-piano.meteor.com/)
-* [all about Meteor](http://meteor.com/)
-* [all about me](http://dl.dropboxusercontent.com/u/41075/brentnoorda/index.html)
+*more info at [github:BrentNoorda/toy-piano](https://github.com/BrentNoorda/toy-piano)*
 
 
 
 
 don't forget:
 
+ * weird way passing size from less to html (hide chat time) and why doesn't meteor make that stuff easier?
+ * how sending keystrokes
+ * lots of latency stuff
+ * DEBUG
+ * when to use isolate, and when not
  * the freaking annoying double-display thing
  * they have this template thing going pretty well, but then it breaks where events are found (may as well use jquery)
+ * add lots of template stuff as a side-effect (to avoid render?)
  * too much magic still (for example had to read lots of source code, put in alerts, etc...)
  * add feature to show what is being redrawn
  * our way or the highway
@@ -171,3 +176,6 @@ libraries might not all work exactly - need "smart packages"
 
  the meteor people need to make, and mimic, fraking real-worl web sites
 
+------
+
+&nbsp;&nbsp;&nbsp;&nbsp; [&lt;&lt; back](../README.md#interesting-bits)
