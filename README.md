@@ -42,7 +42,7 @@ Here's the commands to get toy-piano running as a local server on your system.
 
 Open your browser to [http://localhost:3000/](http://localhost:3000/) and, voila, you have your own toy piano running on your computer.
 
-All installations of completely new server platforms should be so simple!
+All installations of completely new server platforms should be so simple! (Are you reading this, makers of other frameworks? I'm fed up with the bunch of you and you're "five easy steps to install this framework, provided you're already running version X of this, which has it's own five easy steps, and Y of that thing with it's own five easy steps, and NOT running version Z of another thing, which is incompatible.)
 
 ### *How do they do this so-easy-to-install magic?*
 
@@ -127,7 +127,7 @@ Another problem about everything being glommed together you pretty much lose con
 
 * **sharing keyboard presses among all worldwide users** - Whenever anyone presses the keyboard, everyone in the world (on this page) is supposed to hear it. [real-time-ish broadcasting with Meteor.](SLIDES/wwkeypress.md)
 
-* **passing variables from css to javascript** - ?????  a better solution?
+* **passing variables from css to javascript** - ?????  a better solution? [???](SLIDES/sharelessvar.md)
 
 * **DEBUG variable** - ??? this is done poorly and I'd like a better solution
 
@@ -144,7 +144,7 @@ Another problem about everything being glommed together you pretty much lose con
 <a name="for-mdg-eyes-only"></a>
 # Recommendations for Meteor Development Group
 
-*Unsolicited advice for the Meteor developers; so, unless you work at MDG, [don't read this](SLIDES/mdgadvice.md).*
+*Unsolicited advice for the Meteor developers; so, unless you work at MDG, [don't read this advice for MDG](SLIDES/mdgadvice.md).*
 
 -------
 
