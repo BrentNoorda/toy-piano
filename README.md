@@ -15,7 +15,7 @@ Jump To:
 * [Quick overview of the toy-piano application hierarchy](#quick-overview-hierarchy)
 * [The interesting bits of code in toy-piano](#interesting-bits)
 * [Recommendations for web developers - should you be using MeteorJS?](#web-rec)
-* [Recommendations for Meteor Development Group - how to improve your product](#for-mdg-eyes-only)
+* [Recommendations for Meteor Development Group](#for-mdg-eyes-only)
 
 ------------------------------------------------------------------------------
 
@@ -127,6 +127,9 @@ Another problem about everything being glommed together you pretty much lose con
 
 * **sharing keyboard presses among all worldwide users** - Whenever anyone presses the keyboard, everyone in the world (on this page) is supposed to hear it. [real-time-ish broadcasting with Meteor.](SLIDES/wwkeypress.md)
 
+* **passing variables from css to javascript** - ?????  a better solution?
+
+* **DEBUG variable** - ??? this is done poorly and I'd like a better solution
 
 -------------------------------------------------------------------------
 
@@ -139,9 +142,9 @@ Another problem about everything being glommed together you pretty much lose con
 -------------------------------------------------------------------------
 
 <a name="for-mdg-eyes-only"></a>
-# Recommendations for Meteor Development Group - how to improve your product
+# Recommendations for Meteor Development Group
 
-*This top-secret section of unsolicited advice is only for employees of MDG, so unless you work at MDG, [don't read this](SLIDES/mdgadvice.md).*
+*Unsolicited advice for the Meteor developers; so, unless you work at MDG, [don't read this](SLIDES/mdgadvice.md).*
 
 -------
 
@@ -157,14 +160,8 @@ That's all, folks.  Here's some link reminders:
 
 don't forget:
 
- * weird way passing size from less to html (hide chat time) and why doesn't meteor make that stuff easier?
- * how sending keystrokes
- * lots of latency stuff
- * DEBUG
- * when to use isolate, and when not
  * the freaking annoying double-display thing
  * they have this template thing going pretty well, but then it breaks where events are found (may as well use jquery)
- * add lots of template stuff as a side-effect (to avoid render?)
  * too much magic still (for example had to read lots of source code, put in alerts, etc...)
  * add feature to show what is being redrawn
  * our way or the highway
