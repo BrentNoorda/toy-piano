@@ -4,6 +4,11 @@ kludging animations on Meteor for toy-piano <span style="float:right;"> [&#x25B2
 In the chat window portion of toy-piano I wanted animated to show new chat elements (rather than tho have them just suddenly exist). But Meteor doesn't yet help with the concept of animations, such as when a new item appears in the DOM. The workarounds I found online seemed overly complicated, and so here's the simple kludge I came up with.
 
 
+
+
+
+The chat system also keeps only the last 10 items of chat (this happens on the server). It would have been nice to have old chats fade out instead of just disappearing. That trick seemed harder than the fade-in, so I didn't even try.
+
 ### the biggest problem I hit when adding animations
 
 The standard Meteor chat examples simply change the state of the display output when a user enters a chat message, as in this [Basic chat app](http://brh-chat.meteor.com/)  example from the top of [Made With Meteor](http://madewith.meteor.com/).

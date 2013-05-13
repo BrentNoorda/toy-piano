@@ -136,9 +136,11 @@ Another problem about everything being glommed together you pretty much lose con
 <a name="web-rec"></a>
 # Recommendations for web developers - should you be using MeteorJS?
 
-Yes. It is SO easy to put together a single-page web site????
- this is a great environment for when the state of the data matches the state of the database
+Yes. It is **SO** easy to put together a single-page web site. And meteor.com will host it, along with a bunch of data, for free! So go ahead and put up *something*. Why not?
 
+For a weekend or hackathon project that fits into the one-page paradigm, Meteor is absolutely a sweet way to go.
+
+For your long-term plans, that's iffy. Personally, for big projects I'll wait for a tad more stability, more early-adopters proving it can be done, and more word from Meteor about their revenue plans. For smaller projects, such as the next time a friend asks me to put up some page for their personal or business needs, I'll probably give Meteor a shot.
 
 -------------------------------------------------------------------------
 

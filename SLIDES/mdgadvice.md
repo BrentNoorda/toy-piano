@@ -13,6 +13,8 @@ Instead of immediate switching from the display of one static DOM state to anoth
 
 In short, we need visual cues. We need animations.
 
+If you can get animations working alongside latency compensation, even better.
+
 I wrote about my own struggle with this in [animating fade-ins for the chat window](chatanimation.md), but for a simple example of why this is needed, look at your own [leaderboard example](http://meteor.com/examples/leaderboard) and watch the video starting around 20 seconds in. The user on the right is voting, and because of some yellow background and their own actions has a clue what's going on, but the poor user on the left, representing "any player in the world" is just seeing stateless magic, and that's a poor experience (and can even be a wrong experience if that users is click on a name as it's magically moving around and so maybe clicks on the wrong name).
 
 # 2) how the heck is scaling going to work?
@@ -91,7 +93,7 @@ It's great that it's not too difficult to make a smart package, or to work with 
 
 # 9) concentrate on mobile
 
-Most of your meteor apps (your own examples, and those found on [Made with Meteor](http://madewith.meteor.com/)) look pretty crappy on mobile browsers. Fix that by concentrating on that.
+Most of your meteor apps (your own examples, and those found on [Made with Meteor](http://madewith.meteor.com/)) look pretty crappy on mobile browsers. Concentrate on mobile.
 
 # 10) charge something for something
 
