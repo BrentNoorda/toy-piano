@@ -40,7 +40,7 @@ function initialize_keyboard_keys_defaults()  // set .idx, .leftOffset, .width, 
         key.leftOffset = 1;
         key.width = 1;
         key.visual = null;
-        key.audio = new Audio(key.audiofile + audio_file_extension);
+        key.audio = new Audio('/' + key.audiofile + audio_file_extension);
         key.keyboardCode = key.keyboardKey.charCodeAt(0);
         if ( key.note.length === 1 )
         {
