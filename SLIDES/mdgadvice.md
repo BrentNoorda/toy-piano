@@ -1,7 +1,7 @@
 Dear MeteorJS Development Group, here's 1000 things you need to do to achieve your mission <span style="float:right;"> [&#x25B2;](../README.md#for-mdg-eyes-only)</span>
 ===============
 
-*My advice, and a few bucks, will buy you a small cup of Blue Bottle coffee. You're welcome.*
+*I only coded with Meteor for a couple of days. So my advice, and a few bucks, will buy you a small cup of Blue Bottle coffee. You're welcome.*
 
 # 1) Figure out the animation stuff
 
@@ -57,6 +57,7 @@ I want at least four levels of this debugging help.
 
 4) a full debugging environment
 
+<a name="combineevenmoreandless"></a>
 # 6) go a step further combining html(handlebars), css(less), & javascript...
 
 I like that you're combining so many components together. I like putting handlebars and less javascript files into combined directories, and further knowing that your tools will bundle them all together. I like that the server language is the same as the client, and much of the time (as with DB calls) the code is actually the same on both client and server.

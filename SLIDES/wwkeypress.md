@@ -1,180 +1,78 @@
 real-time sharing toy-piano keypresses amond all worldwide users <span style="float:right;"> [&#x25B2;](../README.md#interesting-bits)</span>
 ===============
 
-toy-piano is my first attempt to play with [MeteorJS](http://meteor.com/) and decide if it really is, as their website proclaims, "A better way to build apps."
+The goal was for a global keyboard: anytime anyone in the world pressed keys on [toy-piano.meteor.com](http://toy-piano.meteor.com/), we would all hear, see, and play along with them together. *It would be like [that scene in Big](http://www.youtube.com/watch?v=0Yu62StlsMY), only with the entire world coming together in perfect unison and harmony.*
 
-I'll share here what I learned, a bit about how toy-piano works, and overall impressions of MeteorJS.
+### first pass: sharing keys through a DB collection
 
-All of the [soure code is on github](https://github.com/BrentNoorda/toy-piano) and a live demo is here: [http://toy-piano.meteor.com/](http://toy-piano.meteor.com/)
+Meteor's standard way to share data among users is through database Collections, so that's how I started. Each time a client hit a key, an entry would go in the database. Each time an entry went in database all clients would get it and play it.
 
-Jump To:
+This approach was really easy to put together and worked pretty well, with only a tiny lag between multiple players, when I tried it locally.
 
-* [Why a toy piano?](#why-toy)
-* [Installing & Running this code on your own computer](#install-and-run)
-* [Super-short intro to Meteor development](#super-short)
-* [Quick overview of the toy-piano application hierarchy](#quick-overview-hierarchy)
-* [The interesting bits of code in toy-piano](#interesting-bits)
-* [Recommendations for web developers - should you be using MeteorJS?](#web-rec)
-* [Recommendations for Meteor Development Group - how to improve your product](#for-mdg-eyes-only)
+But when I deployed to Meteor.com there were obvious lags when one player would hit a key and another player would hear it.
 
-------------------------------------------------------------------------------
+*If you're alone, and want to experience the lags for yourself, turn on the "self latency" checkmark at the bottom of the keyboard, which effectively undoes Meteor's latency compensation and let's you hear yourself as others do:*
 
-<a name="why-toy"></a>
-# Why a toy piano?
+![](https://github.com/BrentNoorda/toy-piano/blob/master/SLIDES/selflatency.png?raw=true)
 
-Because Meteor demos emphasize the "live" nature of the environment, supporting any number of users editing simultaneously, I was curious to create something that would test the speed and "liveliness" of a multiuser app. So I built a toy piano where any time someone presses a key that keypress is broadcast to everyone who is logged in. If latency was low enough, I hoped, the people of the internet could play duets, or triplets, or infinets. *(oh what beautful music I hope we'll make)*
+### second pass: skipping the database
 
-------------------------------------------------------------------------------
+I wondered how much of the lag in playing was do to the layer of using the MongoDB database to store-and-retrieve data. So I set out to use Meteor's publish/subscribe model more directly, without involving the database.
 
-<a name="install-and-run"></a>
-# Installing & Running this code on your own computer
+This proved to be much more complicated than I'd expected because the plumbing of the servers publish mechanism is not yet documented, and it wasn't clear how to directly broadcast to all clients whatever comes in from one client. The good folks at Meteor pointed me to some of their own [tinytest_server.js](https://github.com/meteor/meteor/blob/master/packages/tinytest/tinytest_server.js) code, and I plagiarized from that.
 
-Here is the first area where MeteorJS really really shines: getting started is trivially fast (I hope all framework makers learn from this).
+The resulting code is [server/keypoke.js](https://github.com/BrentNoorda/toy-piano/blob/master/server/keypoke.js).
 
-If you want to run this toy-piano on your own computer (max, windows, linux, I don't care), you don't need to have installed any special versions of languages, tools, libraries, compilers, etc... No, the only thing you need to have already installed are `curl` and `git`. *I'm not kidding*.
+The response was a little better with this approach, but not a lot better. I did not look further than this for making a fully real-time keyboard with Meteor as hosted on their servers (which, to be fair, or simultaneously hosting a lot of other projects too).
 
-Here's the commands to get toy-piano running as a local server on your system.
+### solving the multiple-simultaneous-key (i.e. "chord" problem)
 
-     $ curl https://install.meteor.com | /bin/sh
-     $ git clone https://github.com/BrentNoorda/toy-piano.git my-toy-piano
-     $ cd my-toy-piano
-     $ meteor
+At this point I started to notice a really annoying problem. When a user was pressing multiple keys simultaneously, they would not appear to be pressed simultaneously for other users, as you can see in this video where I'm pressing 4 keys simultaneously, but it usually shows up as if I press one key first followed by the other three simultaneously (*click on image to watch video*):
 
-Open your browser to [http://localhost:3000/](http://localhost:3000/) and, voila, you have your own toy piano running on your computer.
+[![](http://img.youtube.com/vi/zLVwyMev8DE/0.jpg)](http://www.youtube.com/watch?v=zLVwyMev8DE)
 
-All installations of completely new server platforms should be so simple!
+With a little experimentation I got the feeling that the meteor server probably has some timings in it such that it is giving less time (or more infrequent pollings) to a server when it doesn't appear busy, but if it is busy they are more responsive.
 
-### *How do they do this so-easy-to-install magic?*
+To work around my guess, I added some prime-the-pump code to [client/keyboard.js](https://github.com/BrentNoorda/toy-piano/blob/master/client/keyboard/keyboard.js) so that if it's been more than 50ms since keys were pressed, a dummy NOP key would be sent first to prime-the-pump:
 
-MeteorJS is built on [NodeJS](http://nodejs.org/). Node developers exercise a pattern of installing all dependencies for a project within that project's directory structure (so that if project A has different dependencies than project B, there is no conflict). Meteor extends this by including *everything* that is needed, even non-meteor stuff like jquery and underscore, within its installed items. This even includes the database: you don't have to install a compatible database engine on your system, because Meteor includes MongoDB directly within its executable. Fantastic!
+    var prevSendKeyTime = 0;
+    var max_time_between_pump_priming = 50;
 
--------------------------------------------------------------------------
+    function tell_server_about_this_keystroke()
+    {
+        ...
+        curTime = (new Date()).getTime();
+        if ( max_time_between_pump_priming < (curTime - prevSendKeyTime) )
+        {
+            Meteor.call(
+                "addKeypoke",
+                runId,
+                -1,
+                Session.get('username'),
+                self_latency,
+                function (err, result) {
+                    if (err) {
+                        alert("Could not add keypoke " + err.reason);
+                    }
+                }
+            );
+        }
+        ...
+    }
 
-<a name="super-short"></a>
-# Super-short intro to Meteor development
+at the expense of delaying the broadcast of some keystrokes, this does seem to solve the more-annoying problem of not being able to broadcast chords.  Here's the server running with this change:
 
-Meteor does a great job of briefly saying what they're all about [here](http://meteor.com/) and [here](http://docs.meteor.com/#sevenprinciples), but these are the few bits I think are most interesting and important:
+(*click on image to watch video*):
 
-* **same language and code on both client and server** - since both the client and the server are javascript, your brain doesn't have to switch ways of thinking - even better, often the code you right will run on both the client and the server (especially true of database code, where the client often has it's own version of the DB to act more quickly)
-* **automatic page updates as data changes** - with it's "reactive" model what you see on the screen is based on what's in the database - as the data changes the screen is just auto-magically updated to match the new data (it can be pretty cool)
-* **client-side "Session" object** - separate from the database, this client-side object allows one part of client to auto-magically display themselves based on data changed in another part of the client
-* **rapid developments tools** - the Meteor team works hard to remove all developer friction" installing is quick, deploying to a live web server takes seconds, every source-code change causes automatic browser refreshes, lots of packages are waiting to simpley be "added"
+[![](http://img.youtube.com/vi/bIL1qw_C6nM/0.jpg)](http://www.youtube.com/watch?v=bIL1qw_C6nM)
 
--------------------------------------------------------------------------
+------
 
-<a name="quick-overview-hierarchy"></a>
-# Quick overview of the toy-piano application hierarchy
+That's as far as I went creating a real-time shared keyboard as hosted on Meteor's servers. Had I gone further, I would have tried these things:
 
-In a browser, toy-piano looks like this:
-
-![](https://github.com/BrentNoorda/toy-piano/blob/master/SLIDES/toy-piano-web.png?raw=true)
-
-Created by these source files
-
-    client - code that runs only on the client
-        body
-            body.html
-            body.js
-            body.less
-        chat
-            chat.html
-            chat.js
-            chat.less
-        keyboard
-            keyboard.html
-            keyboard.js
-            keyboard.less
-        lib
-            lib.js
-            username.js
-        common.less
-        toy-piano.html
-        toy-piano.less
-    server - code that runs only on the server
-        keypoke.js
-    common - code that is common to client and server
-        chat.js
-    lib - code that is common to client and server
-        lib.js
-    public - static files delivered by the server
-        a.mp3
-        a.wav
-        ... etc all the audio files for each note ...
-
-There are a few very nice things to notice about the layout of these source files:
-
-1. Except for these few top-level directories (client, server, common/lib, & public), Meteor doesn't care what hierarchy you use for your files. They're all going to get meshed into one big mass of data not matter where you place the files.
-2. This allows one to group related files together by functional area, rather than by file type. I.E, in many systems it is common to group all `.js` files in one area, all `.css` files in another, and `.html` files in a third. Meteor does nothing to encourage such silliness.
-
-### *What's good about this?*
-
-This agnostic view of source hierarchy, along with the templating, makes it easy to group source files naturally the way the screen is grouped (e.g. everything related to "chat" is in one area of the screen and in one directory).
-
-### *What's bad about this?*
-
-Because Meteor gloms all the code together into a single page indiscriminately, and because of Meteor's emphasis on "reactivity", any user behavior in one part of the screen can easily cause a redraw of another, mostly-unrelated part of the screen (which can be an invisible performance problem frequently, and a visible problem when animations show up). This can lead to extra time debugging and muddying the clean templates with lots of   "{{#isolate}}" tags.
-
-Another problem about everything being glommed together you pretty much lose control over load order. So if you're loading one js library that depends on another, you have to understand their poorly-documented load orders, or try to defer initializations with `Meteor.startup()` or jQuery's `$(document).ready()`.
-
--------------------------------------------------------------------------
-
-<a name="interesting-bits"></a>
-# The interesting bits of code in toy-piano
-
-* **animating fade-ins for the chat window** - Meteor is great at creating and immediately updating a DOM to match the state of your data, but Meteor sucks when you want to animate transition states. [Read about Meteor animation kludges in toy-piano.](SLIDES/chatanimation.md)
-
-
-
-## blah
-
-### blah
-
-#### blah
-
-
--------------------------------------------------------------------------
-
-<a name="web-rec"></a>
-# Recommendations for web developers - should you be using MeteorJS?
-
-
- this is a great environment for when the state of the data matches the state of the database
-
-
--------------------------------------------------------------------------
-
-<a name="for-mdg-eyes-only"></a>
-# Recommendations for Meteor Development Group - how to improve your product
-
-
-microcosmic god
-
-
--------
-
-*more info at [github:BrentNoorda/toy-piano](https://github.com/BrentNoorda/toy-piano)*
-
-
-
-
-don't forget:
-
- * weird way passing size from less to html (hide chat time) and why doesn't meteor make that stuff easier?
- * how sending keystrokes
- * lots of latency stuff
- * DEBUG
- * when to use isolate, and when not
- * the freaking annoying double-display thing
- * they have this template thing going pretty well, but then it breaks where events are found (may as well use jquery)
- * add lots of template stuff as a side-effect (to avoid render?)
- * too much magic still (for example had to read lots of source code, put in alerts, etc...)
- * add feature to show what is being redrawn
- * our way or the highway
- * load order is annoying, how to make sure one thing is loaded before another
-libraries might not all work exactly - need "smart packages"
-
-
- the meteor people need to make, and mimic, fraking real-worl web sites
+* Hosting on my own server, dedicated to this keyboard. Meteor.com is hosting a ton of stuff, so I don't know how much better it could run on a dedicated machine.
+* Calculating some theoretically best-case values based on pure internet communication times.
+* Using tools that are not part of Meteor, but not prevented by Meteor either, such as using Socket.IO directly, or WebRTC peer channels, or time-dilated wormholes through space (which risks the danger of hearing a keystroke before anyone has pressed it).
 
 ------
 

@@ -13,7 +13,7 @@ Jump To:
 * [Installing & Running this code on your own computer](#install-and-run)
 * [Super-short intro to Meteor development](#super-short)
 * [Quick overview of the toy-piano application hierarchy](#quick-overview-hierarchy)
-* [The interesting bits of code in toy-piano](#interesting-bits)
+* [A few interesting bits of code in toy-piano](#interesting-bits)
 * [Recommendations for web developers - should you be using MeteorJS?](#web-rec)
 * [Recommendations for Meteor Development Group](#for-mdg-eyes-only)
 
@@ -119,7 +119,7 @@ Another problem about everything being glommed together you pretty much lose con
 -------------------------------------------------------------------------
 
 <a name="interesting-bits"></a>
-# The interesting bits of code in toy-piano
+# A few interesting bits of code in toy-piano
 
 * **[animating fade-ins for the chat window](SLIDES/chatanimation.md)** - Meteor is great at creating and immediately updating a DOM to match the state of your data, but Meteor sucks when you want to animate transition states.
 
