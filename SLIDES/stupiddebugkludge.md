@@ -7,7 +7,7 @@ I did some stupid code, and would like someone to give me a better solution.
 
 I like to be in either DEBUG state (in which case I assert stuff, write a lot more log files, patch jQuery to catch invalid selectors, etc...) or !DEBUG state (to run fast).
 
-Since Meteor is all about blending client and server code, it seemed I ought to be able to have a single place to detect if I'm running locally (and so want DEBUG=true) or at meteor.com (with DEBUG=false).
+Since Meteor is so good about blending client and server code, it seemed I ought to be able to have a single place to detect if I'm running locally (and so want DEBUG=true) or at meteor.com (with DEBUG=false).
 
 ### my stupid solution
 
@@ -38,7 +38,7 @@ which the client then calls at startup:
         DEBUG = result;
     });
 
-Already this is pretty silly. But it gets worse because in when my client javascript loadsI don't know initially if that above code, which returns asynchrounously, has been called yet. So [client/lib/lib.js](https://github.com/BrentNoorda/toy-piano/blob/master/client/lib/lib.js) has this startup code just to wait for the DEBUG initialization code to finish:
+Already this is pretty silly. But it gets worse because when my client javascript loads I don't know if the above code, which returns asynchronously, has finished yet. So [client/lib/lib.js](https://github.com/BrentNoorda/toy-piano/blob/master/client/lib/lib.js) has this startup code just to wait for the DEBUG initialization code to finish:
 
     $(document).ready(function() {
         function alter_$_to_warn_if_selector_does_not_exist()

@@ -1,9 +1,9 @@
 passing a variable from css/less to javascript <span style="float:right;"> [&#x25B2;](../README.md#interesting-bits)</span>
 ===============
 
-One of the standard Meteor packages is for the [less dynamic stylesheet language](http://lesscss.org/). It's very nice in developing to alter a .less file, have the Meteor system automatically detect the changes and compile to .css, and then automatically force the browser to redraw the screen with the new stylesheet applied.
+One of the standard Meteor packages is for the [less dynamic stylesheet language](http://lesscss.org/). It's very nice during development to alter a .less file, have the Meteor system automatically detect the changes and compile to .css, and then automatically force the browser to redraw the screen with the new stylesheet applied.
 
-That's all very nice, but I wanted more. There is a part in the chat animations where I wanted to coincide my timings with some of the timings in the css transitions. I didn't want to change parameters in two places, only one.
+That's terrific, but I wanted more. There is a part in the chat animations where I wanted to coincide my timings with some of the timings in the css transitions. I didn't want to change parameters in two places, only one.
 
 I've suggested that [Meteor should solve this problem](mdgadvice.md#combineevenmoreandless), but until they do...
 

@@ -5,7 +5,7 @@ toy-piano is my first attempt to play with [MeteorJS](http://meteor.com/) and de
 
 I'll share here what I learned, a bit about how toy-piano works, and overall impressions of MeteorJS.
 
-All of the [soure code is on github](https://github.com/BrentNoorda/toy-piano) and a live demo is here: [http://toy-piano.meteor.com/](http://toy-piano.meteor.com/)
+All of the [source code is on github](https://github.com/BrentNoorda/toy-piano) and a live demo is here: [http://toy-piano.meteor.com/](http://toy-piano.meteor.com/)
 
 Jump To:
 
@@ -22,7 +22,7 @@ Jump To:
 <a name="why-toy"></a>
 # Why a toy piano?
 
-Because Meteor demos emphasize the "live" nature of the environment, supporting any number of users editing simultaneously, I was curious to create something that would test the speed and "liveliness" of a multiuser app. So I built a toy piano where any time someone presses a key that keypress is broadcast to everyone who is logged in. If latency was low enough, I hoped, the people of the internet could play duets, or triplets, or infinets. *(oh what beautful music I hope we'll make)*
+Because Meteor demos emphasize the "live" nature of the environment, supporting any number of users editing simultaneously, I was curious to create something that would test the speed and "liveliness" of a multiuser app. So I built a toy piano where any time someone presses a key that keypress is broadcast to everyone who is logged in. If latency was low enough, I hoped, the people of the internet could play duets, or triplets, or infinets. *(oh what beautiful music I hope we'll make)*
 
 ------------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ Because Meteor demos emphasize the "live" nature of the environment, supporting 
 
 Here is the first area where MeteorJS really really shines: getting started is trivially fast (I hope all framework makers learn from this).
 
-If you want to run this toy-piano on your own computer (max, windows, linux, I don't care), you don't need to have installed any special versions of languages, tools, libraries, compilers, etc... No, the only thing you need to have already installed are `curl` and `git`. *I'm not kidding*.
+If you want to run this toy-piano on your own computer (mac, windows, linux, I don't care), you don't need to have installed any special versions of languages, tools, libraries, compilers, etc... No, the only thing you need to have already installed are `curl` and `git`. *I'm not kidding*.
 
 Here's the commands to get toy-piano running as a local server on your system.
 
@@ -42,11 +42,11 @@ Here's the commands to get toy-piano running as a local server on your system.
 
 Open your browser to [http://localhost:3000/](http://localhost:3000/) and, voila, you have your own toy piano running on your computer.
 
-All installations of completely new server platforms should be so simple! (Are you reading this, makers of other frameworks? I'm fed up with the bunch of you and you're "five easy steps to install this framework, provided you're already running version X of this, which has it's own five easy steps, and Y of that thing with it's own five easy steps, and NOT running version Z of another thing, which is incompatible.)
+All installations of completely new server platforms should be so simple! (*Are you reading this, makers of other frameworks? I'm fed up with the bunch of you and you're "five easy steps to install this framework, provided you're already running version X of this, which has it's own five easy steps, and Y of that thing with it's own five easy steps, and NOT running version Z of another thing, which is incompatible.*)
 
 ### *How do they do this so-easy-to-install magic?*
 
-MeteorJS is built on [NodeJS](http://nodejs.org/). Node developers exercise a pattern of installing all dependencies for a project within that project's directory structure (so that if project A has different dependencies than project B, there is no conflict). Meteor extends this by including *everything* that is needed, even non-meteor stuff like jquery and underscore, within its installed items. This even includes the database: you don't have to install a compatible database engine on your system, because Meteor includes MongoDB directly within its executable. Fantastic!
+MeteorJS is built on [NodeJS](http://nodejs.org/). Node developers exercise a pattern of installing all dependencies for a project within that project's directory structure (so that if project A has different dependencies than project B, there is no conflict). Meteor extends this by including *everything* that is needed, even non-meteor stuff like jQuery and underscore, within its installed items. This even includes the database: you don't have to install a compatible database engine on your system, because Meteor includes MongoDB directly within its executable. Fantastic!
 
 -------------------------------------------------------------------------
 
@@ -55,10 +55,10 @@ MeteorJS is built on [NodeJS](http://nodejs.org/). Node developers exercise a pa
 
 Meteor does a great job of briefly saying what they're all about [here](http://meteor.com/) and [here](http://docs.meteor.com/#sevenprinciples), but these are the few bits I think are most interesting and important:
 
-* **same language and code on both client and server** - since both the client and the server are javascript, your brain doesn't have to switch ways of thinking - even better, often the code you right will run on both the client and the server (especially true of database code, where the client often has it's own version of the DB to act more quickly)
+* **same language and code on both client and server** - since both the client and the server are javascript, your brain doesn't have to switch ways of thinking - even better, often the code you write will run on both the client and the server (especially true of database code, where the client often has it's own version of the DB to act more quickly)
 * **automatic page updates as data changes** - with it's "reactive" model what you see on the screen is based on what's in the database - as the data changes the screen is just auto-magically updated to match the new data (it can be pretty cool)
 * **client-side "Session" object** - separate from the database, this client-side object allows one part of client to auto-magically display themselves based on data changed in another part of the client
-* **rapid developments tools** - the Meteor team works hard to remove all developer friction" installing is quick, deploying to a live web server takes seconds, every source-code change causes automatic browser refreshes, lots of packages are waiting to simpley be "added"
+* **rapid developments tools** - the Meteor team works hard to remove all developer friction: installing is quick, deploying to a live web server takes seconds, every source-code change causes automatic browser refreshes, lots of packages are waiting to simply be "added"
 
 -------------------------------------------------------------------------
 
@@ -112,9 +112,9 @@ This agnostic view of source hierarchy, along with the templating, makes it easy
 
 ### *What's bad about this?*
 
-Because Meteor gloms all the code together into a single page indiscriminately, and because of Meteor's emphasis on "reactivity", any user behavior in one part of the screen can easily cause a redraw of another, mostly-unrelated part of the screen (which can be an invisible performance problem frequently, and a visible problem when animations show up). This can lead to extra time debugging and muddying the clean templates with lots of   "{{#isolate}}" tags.
+1. Because Meteor gloms all the code together into a single page indiscriminately, and because of Meteor's emphasis on "reactivity", any user behavior in one part of the screen can easily cause a redraw of another, mostly-unrelated part of the screen (which can be an invisible performance problem frequently, and a visible problem when animations show up). This can lead to extra time debugging and muddying the clean templates with lots of   "{{#isolate}}" tags.
 
-Another problem about everything being glommed together you pretty much lose control over load order. So if you're loading one js library that depends on another, you have to understand their poorly-documented load orders, or try to defer initializations with `Meteor.startup()` or jQuery's `$(document).ready()`.
+2. You pretty much lose control over load order. So if you're loading one js library that depends on another, you have to understand their poorly-documented load orders, or try to defer initializations with `Meteor.startup()` or jQuery's `$(document).ready()`.
 
 -------------------------------------------------------------------------
 
@@ -140,7 +140,7 @@ Yes. It is **SO** easy to put together a single-page web site. And meteor.com wi
 
 For a weekend or hackathon project that fits into the one-page paradigm, Meteor is absolutely a sweet way to go.
 
-For your long-term plans, that's iffy. Personally, for big projects I'll wait for a tad more stability, more parts to be well-decomunted instead remaining "hidden magin", more early-adopters proving it can be done, and more word from Meteor about their revenue plans. For smaller projects, such as the next time a friend asks me to put up some page for their personal or business needs, I'll probably give Meteor a shot.
+For your long-term plans, that's iffy. Personally, for big projects I'll wait for a tad more stability, more parts to be well-documented instead remaining "hidden magic", more early-adopters proving it can be done, and more word from Meteor about their revenue plans. For smaller projects, such as the next time a friend asks me to put up some page for their personal or business needs, I'll probably give Meteor a shot.
 
 -------------------------------------------------------------------------
 

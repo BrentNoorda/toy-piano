@@ -22,7 +22,7 @@ In [body.html](https://github.com/BrentNoorda/toy-piano/blob/master/client/body/
         . Let's play.
     </h1>
 
-The main difference between the two states is whethe the first field is visible, or the second field is visible.  That happens in [body.js](https://github.com/BrentNoorda/toy-piano/blob/master/client/body/body.js), where the templates return either one version or the other as "hidden":
+The main difference between the two states is whether the first field is visible, or the second field is visible.  That happens in [body.js](https://github.com/BrentNoorda/toy-piano/blob/master/client/body/body.js), where the templates return either one version or the other as "hidden":
 
     Template.body.display_username_visibility = function () {
         return ( Session.get('entering-username') ) ? 'class="hidden"' : '';
