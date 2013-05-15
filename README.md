@@ -140,7 +140,7 @@ Yes. It is **SO** easy to put together a single-page web site. And meteor.com wi
 
 For a weekend or hackathon project that fits into the one-page paradigm, Meteor is absolutely a sweet way to go.
 
-For your long-term plans, that's iffy. Personally, for big projects I'll wait for a tad more stability, more early-adopters proving it can be done, and more word from Meteor about their revenue plans. For smaller projects, such as the next time a friend asks me to put up some page for their personal or business needs, I'll probably give Meteor a shot.
+For your long-term plans, that's iffy. Personally, for big projects I'll wait for a tad more stability, more parts to be well-decomunted instead remaining "hidden magin", more early-adopters proving it can be done, and more word from Meteor about their revenue plans. For smaller projects, such as the next time a friend asks me to put up some page for their personal or business needs, I'll probably give Meteor a shot.
 
 -------------------------------------------------------------------------
 
@@ -157,20 +157,3 @@ That's all, folks.  Here's some link reminders:
 * [toy-piano running on meteor's servers](http://toy-piano.meteor.com/)
 * [all about Meteor](http://meteor.com/)
 * [all about me](http://dl.dropboxusercontent.com/u/41075/brentnoorda/index.html)
-
-
-
-
-don't forget:
-
- * the freaking annoying double-display thing
- * they have this template thing going pretty well, but then it breaks where events are found (may as well use jquery)
- * too much magic still (for example had to read lots of source code, put in alerts, etc...)
- * add feature to show what is being redrawn
- * our way or the highway
- * load order is annoying, how to make sure one thing is loaded before another
-libraries might not all work exactly - need "smart packages"
-
-
- the meteor people need to make, and mimic, fraking real-worl web sites
-
