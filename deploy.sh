@@ -2,5 +2,5 @@
 #
 # deploy new toy-piano to server
 
-meteor deploy toy-piano.meteor.com
+cat password.txt | meteor deploy toy-piano.meteor.com
 open http://toy-piano.meteor.com/
