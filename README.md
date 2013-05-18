@@ -16,6 +16,7 @@ Jump To:
 * [A few interesting bits of code in toy-piano](#interesting-bits)
 * [Recommendations for web developers - should you be using MeteorJS?](#web-rec)
 * [Recommendations for Meteor Development Group](#for-mdg-eyes-only)
+* [History](#history)
 
 ------------------------------------------------------------------------------
 
@@ -140,7 +141,7 @@ Yes. It is **SO** easy to put together a single-page web site. And meteor.com wi
 
 For a weekend or hackathon project that fits into the one-page paradigm, Meteor is absolutely a sweet way to go.
 
-For your long-term plans, that's iffy. Personally, for big projects I'll wait for a tad more stability, more parts to be well-documented instead remaining "hidden magic", more early-adopters proving it can be done, and more word from Meteor about their revenue plans. For smaller projects, such as the next time a friend asks me to put up some page for their personal or business needs, I'll probably give Meteor a shot.
+For your long-term plans, that's iffy. Personally, for big projects I'll wait for a tad more stability, more parts to be well-documented instead remaining "hidden magic", and more early-adopters proving it can be done. For smaller projects, such as the next time a friend asks me to put up some page for their personal or business needs, I'll probably give Meteor a shot.
 
 -------------------------------------------------------------------------
 
@@ -148,6 +149,14 @@ For your long-term plans, that's iffy. Personally, for big projects I'll wait fo
 # Recommendations for Meteor Development Group
 
 *Unsolicited advice for the Meteor developers; so, unless you work at MDG, don't read this [advice for MDG](SLIDES/mdgadvice.md).*
+
+-------------------------------------------------------------------------
+
+<a name="history"></a>
+# History
+
+* 2013-05-17 - I learned that Meteor has announced a plan to eventually charge for something, which alleviates some of the complaints I had about the long-term viability of the project, and so I've changed a couple of references to "how will they make money" from these documents. To learn more see "Galaxy" in [this old meteor blog](http://meteor.com/blog/2012/07/25/meteors-new-112-million-development-budget).
+* 2013-05-16 - Updated to Meteor version 0.6.3.* - This release seems to have noticeably improved latency problems (their release notes mention more and better use of WebSockets now) so that all-players hear your keystrokes much much quicker. I might be able to alter some code to test this but haven't tried. The 0.6.3 release notes say a 'tap' click event was also added, meaning I should be able to remove that from a separate event handler via jQuery, but I haven't tried that yet either. The Meteor 0.6.3 release note is [here](http://meteor.com/blog/2013/05/15/meteor-063-websockets-mongodb-24-coffee-162-synthetic-tap-events).
 
 -------
 

@@ -74,6 +74,10 @@ That's as far as I went creating a real-time shared keyboard as hosted on Meteor
 * Calculating some theoretical best-case values based on pure internet communication times.
 * Using tools that are not part of Meteor, but not prevented by Meteor either, such as using Socket.IO directly, or WebRTC peer channels, or time-dilated wormholes through space (which risks the danger of hearing a keystroke before anyone has pressed it).
 
+### Update: 2013-05-17
+
+About a day after uploading toy-piano and writing about these latency issues, Meteor released version 0.6.3, which in my quick testing seems to have greatly reduced latency problems. The [0.6.3 notes](http://meteor.com/blog/2013/05/15/meteor-063-websockets-mongodb-24-coffee-162-synthetic-tap-events) say that they're using WebSockets more (or better) so maybe that accounts for this improvement.
+
 ------
 
 &nbsp;&nbsp;&nbsp;&nbsp; [&lt;&lt; back](../README.md#interesting-bits)

@@ -96,11 +96,13 @@ It's great that it's not too difficult to make a smart package, or to work with 
 
 Most of your meteor apps (your own examples, and those found on [Made with Meteor](http://madewith.meteor.com/)) look pretty crappy on mobile browsers. Concentrate on mobile.
 
-# 10) charge something for something
+# <font style="text-decoration:line-through;color:#666;">10) charge something for something
 
 Is Meteor going to exist three years from now? Do I want to put time into a platform that I don't know will exist three years from now? How can you convince me you'll stick around?
 
-I'll tell you how I'll be convinced: when you get some revenue; when you figure out how to charge something for something.
+I'll tell you how I'll be convinced: when you get some revenue; when you figure out how to charge something for something.</font>
+
+Since writing this section I've learned that Meteor has announced a "Galaxy" plan to eventually charge for something, which alleviates some of these concerns. To learn more see "Galaxy" in [this old meteor blog](http://meteor.com/blog/2012/07/25/meteors-new-112-million-development-budget).
 
 # 11,12,13...1000) develop working, functional, demo version of all of today's most-popular web sites and applications and gizmos
 
