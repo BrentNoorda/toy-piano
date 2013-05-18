@@ -25,7 +25,10 @@ The resulting code is [server/keypoke.js](https://github.com/BrentNoorda/toy-pia
 
 The response was a little better with this approach, but not a lot better.
 
+<a name="chord"></a>
 ### solving the multiple-simultaneous-key (i.e. "chord" problem)
+
+__*Note: About a day after uploading this document, Meteor coincidentally released version 0.6.3 [release notes here](http://meteor.com/blog/2013/05/15/meteor-063-websockets-mongodb-24-coffee-162-synthetic-tap-events) which I think may have solved this problem by better use of WebSockets. I haven't had time to test that yet, but quite possibly the kludge described here is no longer required.*__
 
 At this point I started to notice a really annoying problem. When a user was pressing multiple keys simultaneously, they would not appear to be simultaneous for other users, as you can see in this video where I'm pressing 4 keys together, but it usually shows up as if I press one key first followed by the other three simultaneously (*click on image to watch video*):
 
@@ -73,6 +76,10 @@ That's as far as I went creating a real-time shared keyboard as hosted on Meteor
 * Hosting on my own server, dedicated to this keyboard. Meteor.com is hosting a ton of stuff, so I don't know how much better it could run on a dedicated machine.
 * Calculating some theoretical best-case values based on pure internet communication times.
 * Using tools that are not part of Meteor, but not prevented by Meteor either, such as using Socket.IO directly, or WebRTC peer channels, or time-dilated wormholes through space (which risks the danger of hearing a keystroke before anyone has pressed it).
+
+### Update: 2013-05-17
+
+About a day after uploading toy-piano and writing about these latency issues, Meteor released version 0.6.3, which in my quick testing seems to have greatly reduced latency problems. The [0.6.3 notes](http://meteor.com/blog/2013/05/15/meteor-063-websockets-mongodb-24-coffee-162-synthetic-tap-events) say that they're using WebSockets more (or better) so maybe that accounts for this improvement. It's also likely that 0.6.3 removes the need to fix the "chord" problem, as described above, because maybe it's no longer a problem. (I hope to look into that someday).
 
 ------
 
