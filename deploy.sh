@@ -2,5 +2,14 @@
 #
 # deploy new toy-piano to server
 
-cat password.txt | meteor deploy toy-piano.meteor.com
-open http://toy-piano.meteor.com/
+password=$(head -n 1 password.txt)
+
+expect -f - <<EOD
+spawn meteor deploy toy-piano.meteor.com
+expect "Password:"
+send "$password\r"
+
+expect "Deploying to toy-piano.meteor.com.  Bundling..."
+expect "Uploading"
+expect "Now serving at toy-piano.meteor.com"
+EOD
