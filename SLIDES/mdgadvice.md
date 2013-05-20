@@ -111,7 +111,7 @@ Most of your meteor apps (your own examples, and those found on [Made with Meteo
 
 **This is BY FAR the most important recommendation. All of the others recommendations would probably fall out of this one.**
 
-Instead of producing samples and demos that show what Meteor excels at, you need to produce samples of how to use Meteor to reproduce the most influential pages and apps of today. Show us best practices for reproducing today's hip new sites (e.g. Pinterest, Facebook, Netflix? Yammer?) and the cool stuff used in them (menus, drop downs, fades, infinite scrolling, ads, contextual popups, and on and on...).
+Instead of producing samples and demos that show what Meteor excels at, you need to produce samples of how to use Meteor to reproduce the most influential pages and apps of today. Show us best practices for reproducing today's hip new sites (e.g. Pinterest, Facebook, Netflix? Yammer?) and the cool stuff used in them (menus, drop downs, fades, infinite scrolling, ads, contextual popups, integration with external non-meteor code such as adwords, and on and on...).
 
 While doing so, and eating your own dog food doing it, you'll be the first to come across all the challenges your users are going to hit, and the first to come up with the solutions (even when it means, gulp, re-evaluating your assumptions about your own platform).
 
