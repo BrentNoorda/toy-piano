@@ -24,7 +24,7 @@ Meteor.methods({
 
             var oldestChats = Chats.find({},{
                 skip: 10,
-                sort: {when:1}
+                sort: {when:-1}
             });
             oldestChats.forEach(function (chat) {
                 Chats.remove(chat._id);
@@ -40,7 +40,7 @@ Meteor.methods({
 if (Meteor.isServer)
 {
     Meteor.publish('chats', function() {
-        return Chats.find({},{sort:{when:1}});
+        return Chats.find({},{sort:{when:-1}});
     });
 }
 if (Meteor.isClient)
