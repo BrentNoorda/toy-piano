@@ -39,6 +39,7 @@ Meteor.methods({
 
 if (Meteor.isServer)
 {
+    BrowserPolicy.framing.disallow(); // is this even the right place for this?
     Meteor.publish('chats', function() {
         return Chats.find({},{sort:{when:-1}});
     });
