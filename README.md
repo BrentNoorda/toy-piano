@@ -166,4 +166,4 @@ That's all, folks.  Here's some link reminders:
 * [toy-piano on github](https://github.com/BrentNoorda/toy-piano)
 * [toy-piano running on meteor's servers](http://toy-piano.meteor.com/)
 * [all about Meteor](http://meteor.com/)
-* [all about me](http://www.brent-nooorda.com/)
+* [all about me](http://www.brent-noorda.com/)
