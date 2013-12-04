@@ -5,6 +5,7 @@
 password=$(head -n 1 password.txt)
 
 expect -f - <<EOD
+set timeout 360
 spawn meteor deploy toy-piano.meteor.com
 expect "Password:"
 send "$password\r"
