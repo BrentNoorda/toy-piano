@@ -14,7 +14,7 @@ Meteor.methods({
             throw new Meteor.Error(413, "Missing username!");
         }
 
-        newChat.when = new Date();
+        newChat.when = (new Date()).valueOf();
 
         if (Meteor.isServer) {
             // only keep a limited number of chats, and delete anything older
@@ -39,8 +39,9 @@ Meteor.methods({
 
 if (Meteor.isServer)
 {
+    BrowserPolicy.framing.disallow(); // is this even the right place for this?
     Meteor.publish('chats', function() {
-        return Chats.find({});
+        return Chats.find({},{sort:{when:-1}});
     });
 }
 if (Meteor.isClient)
