@@ -1,5 +1,5 @@
 /*jslint white:false plusplus:false browser:true nomen:false */
-/*globals Meteor, BrowserPolicy, Chats:true*/
+/*globals Meteor, Chats:true*/
 
 Chats = new Meteor.Collection("chats");
 
